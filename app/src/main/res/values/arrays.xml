@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="SETTING_ICON_ARRAY">
+        <item>@drawable/ic_language</item>
+        <item>@drawable/ic_paint_swatch</item>
+        <item>@drawable/ic_vector</item>
+    </array>
+</resources>

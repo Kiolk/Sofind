@@ -1,0 +1,40 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <declare-styleable name="AppTheme">
+        <attr name="primaryTextColor" format="color"/>
+        <attr name="backgroundColor" format="color"/>
+        <attr name="menuTextColor" format="integer"/>
+        <attr name="iconLampColor" format="color"/>
+        <attr name="colorAccent" format="color"/>
+        <attr name="bigTitle" format="dimension"/>
+        <attr name="smallTitle" format="dimension"/>
+        <attr name="generalBackground" format="integer"/>
+        <attr name="itemBackgroundColor" format="color"/>
+        <attr name="toolBarHeight" format="dimension"/>
+    </declare-styleable>
+
+    <style name="MyTheme" parent="AppTheme">
+
+    </style>
+
+    <style name="Light" parent="MyTheme">
+        <item name="menuTextColor">@color/DARK_GRAY_TEXT_COLOR</item>
+        <item name="backgroundColor">@color/LIGHT_BACKGROUND_COLOR</item>
+        <item name="primaryTextColor">@color/DARK_GRAY_TEXT_COLOR</item>
+    </style>
+
+    <style name="Dark" parent="MyTheme">
+        <item name="menuTextColor">@color/LIGHT_GRAY_TEXT_COLOR</item>
+        <item name="backgroundColor">@color/DARK_BACKGROUND_COLOR</item>
+        <item name="primaryTextColor">@color/LIGHT_GRAY_TEXT_COLOR</item>
+    </style>
+
+</resources>

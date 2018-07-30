@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Sofind</string>
+    <string name="YOUR_SOUNDS">Your sounds</string>
+    <string name="WORLD_SOUNDS">World sounds</string>
+    <string name="CREATE_SOUND">Create sound</string>
+    <string name="EDIT_PROFILE">Edit profile</string>
+    <string name="SETTING">Setting</string>
+    <string name="LOG_OUT">Log out</string>
+    <string name="HEADER_BACKGROUND">Header background</string>
+    <string name="SEARCH">Search</string>
+    <string name="SAVE">Save</string>
+
+    <string-array name="SETTING_ARRAY">
+        <item>Change language</item>
+        <item>Change accent color</item>
+        <item>Change mode</item>
+    </string-array>
+</resources>

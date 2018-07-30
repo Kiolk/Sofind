@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="MENU_WIDTH">250dp</dimen>
+    <dimen name="HEADER_HEIGHT">180dp</dimen>
+    <dimen name="ICON_SIZE">60dp</dimen>
+    <dimen name="STANDART_PADDING">5dp</dimen>
+    <dimen name="NORMAL_TEXT_SIZE">24sp</dimen>
+</resources>
