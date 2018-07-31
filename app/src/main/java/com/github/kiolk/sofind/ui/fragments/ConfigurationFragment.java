@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.github.kiolk.sofind.R;
-import com.github.kiolk.sofind.data.SimpleArrayAdapter;
+import com.github.kiolk.sofind.data.adapters.SimpleArrayAdapter;
 import com.github.kiolk.sofind.ui.fragments.base.BaseFragment;
 import com.github.kiolk.sofind.util.ResoursesUtil;
 

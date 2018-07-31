@@ -5,4 +5,5 @@
     <dimen name="ICON_SIZE">60dp</dimen>
     <dimen name="STANDART_PADDING">5dp</dimen>
     <dimen name="NORMAL_TEXT_SIZE">24sp</dimen>
+    <dimen name="BIG_PADDING">20dp</dimen>
 </resources>

@@ -1,6 +1,5 @@
 package com.github.kiolk.sofind.ui.fragments.base;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,13 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.kiolk.sofind.R;
-import com.github.kiolk.sofind.ui.activities.HomeActivity;
+import com.github.kiolk.sofind.ui.activities.home.HomeActivity;
 
 public abstract class BaseFragment extends Fragment {
 

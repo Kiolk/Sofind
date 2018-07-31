@@ -8,6 +8,7 @@
     <color name="LIGHT_BACKGROUND_COLOR">#9ea5f2</color>
     <color name="DARK_BACKGROUND_COLOR">#313131</color>
     <color name="TITLE_COLOR">#f2f2c8</color>
+    <color name="TRANSPARENT_COLOR">#00000000</color>
 
 
 </resources>

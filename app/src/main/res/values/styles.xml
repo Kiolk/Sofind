@@ -37,4 +37,11 @@
         <item name="primaryTextColor">@color/LIGHT_GRAY_TEXT_COLOR</item>
     </style>
 
+    <style name="EditBlockStyle">
+        <item name="android:paddingLeft">@dimen/BIG_PADDING</item>
+        <item name="android:layout_marginLeft">@dimen/BIG_PADDING</item>
+        <item name="android:layout_marginRight">@dimen/BIG_PADDING</item>
+        <item name="android:paddingRight">@dimen/BIG_PADDING</item>
+    </style>
+
 </resources>
