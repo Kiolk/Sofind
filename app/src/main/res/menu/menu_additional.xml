@@ -11,5 +11,10 @@
         app:showAsAction="ifRoom"
         android:title="@string/SAVE"
         android:icon="@drawable/ic_save"/>
+    <item android:id="@+id/profile_menu_item"
+        android:visible="false"
+        app:showAsAction="ifRoom"
+        android:title="@string/SAVE"
+        android:icon="@drawable/ic_save_data"/>
 
 </menu>

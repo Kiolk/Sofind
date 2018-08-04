@@ -1,7 +1,7 @@
 package com.github.kiolk.sofind.data;
 
 public interface SimpleResultListener {
-    void onSucces();
+    void onSuccess();
 
     void onError(String message);
 }

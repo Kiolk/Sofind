@@ -67,5 +67,6 @@ public abstract class BaseFragment extends Fragment {
     private void resetMenuIcon(Menu menu) {
         menu.findItem(R.id.save_menu_item).setVisible(false);
         menu.findItem(R.id.search_menu_item).setVisible(false);
+        menu.findItem(R.id.profile_menu_item).setVisible(false);
     }
 }

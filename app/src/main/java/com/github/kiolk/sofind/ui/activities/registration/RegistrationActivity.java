@@ -173,7 +173,7 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
 
     @Override
     public boolean isValidRegistrationForm() {
-        return isValidEmailAndPassword() && isValidTextInput(mUserAge.getText().toString())
+        return isValidEmailAndPassword() && isValidTextInput(mUserName.getText().toString())
                 && isValidTextInput(mUserSrname.getText().toString())
                 && isValidAge(mUserAge.getText().toString())
                 && isUserMale != null;

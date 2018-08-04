@@ -15,7 +15,7 @@ public class HomePresenterImpl implements HomePresenter {
     public void onResupe() {
         DataManager.getInstance().addStateListener(new SimpleResultListener() {
             @Override
-            public void onSucces() {
+            public void onSuccess() {
                 mHomeView.singOut();
             }
 

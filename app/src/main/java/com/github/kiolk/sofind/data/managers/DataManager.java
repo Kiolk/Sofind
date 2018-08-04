@@ -1,7 +1,9 @@
 package com.github.kiolk.sofind.data.managers;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
+import com.github.kiolk.sofind.data.ObjectResultListener;
 import com.github.kiolk.sofind.data.SimpleResultListener;
 import com.github.kiolk.sofind.data.models.UserModel;
 import com.github.kiolk.sofind.ui.activities.registration.RegistrationModel;
@@ -9,17 +11,29 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
 public class DataManager implements RegistrationModel, RealDataBaseModel {
 
+    private static final String SOFIND_USER =  "SofindUsers";
+
     private static DataManager mInstance;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mUserDatabaseReference;
+    private ChildEventListener mChildEventListener;
 
     private DataManager() {
-
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mUserDatabaseReference = mFirebaseDatabase.getReference().child(SOFIND_USER);
     }
 
     public static DataManager getInstance() {
@@ -35,7 +49,7 @@ public class DataManager implements RegistrationModel, RealDataBaseModel {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    listener.onSucces();
+                    listener.onSuccess();
                 } else {
                     listener.onError("Error");
                 }
@@ -49,7 +63,7 @@ public class DataManager implements RegistrationModel, RealDataBaseModel {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    simpleResultListener.onSucces();
+                    simpleResultListener.onSuccess();
                 } else {
                     simpleResultListener.onError("Error");
                 }
@@ -94,13 +108,58 @@ public class DataManager implements RegistrationModel, RealDataBaseModel {
     }
 
     @Override
-    public void saveNewUser(UserModel user) {
-
+    public void saveNewUser(UserModel user, final SimpleResultListener listener) {
+        mUserDatabaseReference.child(user.getUserId()).setValue(user)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+//                            task.getException().getMessage();
+                            listener.onSuccess();
+                        }else{
+                            listener.onError("Error");
+                        }
+                    }
+                });
     }
 
     @Override
-    public void saveNewUser() {
+    public void getUserInformation(final ObjectResultListener listener) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null) {
+            final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            mChildEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    UserModel user = dataSnapshot.getValue(UserModel.class);
+                    if(user != null && user.getUserId().equals(userId)){
+                        listener.resultProcess(user);
+                        mUserDatabaseReference.removeEventListener(mChildEventListener);
+                    }
+                }
 
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            };
+            mUserDatabaseReference.addChildEventListener(mChildEventListener);
+        }
     }
 
     @Override

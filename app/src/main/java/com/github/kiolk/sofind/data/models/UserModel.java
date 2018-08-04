@@ -1,6 +1,8 @@
 package com.github.kiolk.sofind.data.models;
 
-public class UserModel {
+import java.io.Serializable;
+
+public class UserModel implements Serializable{
 
     private String mUserId;
     private String mUserName;

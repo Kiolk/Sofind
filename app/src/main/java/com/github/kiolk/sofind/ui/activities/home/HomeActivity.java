@@ -19,6 +19,7 @@ import com.github.kiolk.sofind.ui.activities.SplashActivity;
 import com.github.kiolk.sofind.ui.activities.base.BaseActivity;
 import com.github.kiolk.sofind.ui.fragments.ConfigurationFragment;
 import com.github.kiolk.sofind.ui.fragments.CreateSoundFragment;
+import com.github.kiolk.sofind.ui.fragments.profile.ProfileFragment;
 import com.github.kiolk.sofind.ui.fragments.WorldSoundsFragment;
 import com.github.kiolk.sofind.ui.fragments.YourSoundsFragment;
 
@@ -29,6 +30,7 @@ public class HomeActivity extends BaseActivity implements HomeView{
     private CreateSoundFragment mCreateSoundFragment = new CreateSoundFragment();
     private ConfigurationFragment mConfigurationFragment = new ConfigurationFragment();
     private HomePresenterImpl mPresenter;
+    private ProfileFragment mEdProfileFragment = new ProfileFragment();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +60,10 @@ public class HomeActivity extends BaseActivity implements HomeView{
                 Toast.makeText(getBaseContext(), "Selected search", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.save_menu_item:
+                Toast.makeText(getBaseContext(), "Selected save", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.profile_menu_item:
+                mEdProfileFragment.saveEditProfile();
                 Toast.makeText(getBaseContext(), "Selected save", Toast.LENGTH_SHORT).show();
                 break;
             default:
@@ -97,6 +103,8 @@ public class HomeActivity extends BaseActivity implements HomeView{
                         Toast.makeText(getBaseContext(), "Selected create user sound", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.edit_profile_menu_item:
+                        showFragment(mEdProfileFragment);
+                        mEdProfileFragment.prepareInformation();
                         Toast.makeText(getBaseContext(), "Selected edit profile", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.setting_menu_item:
@@ -119,6 +127,7 @@ public class HomeActivity extends BaseActivity implements HomeView{
         closeFragment(mWorldSoundFragment);
         closeFragment(mCreateSoundFragment);
         closeFragment(mConfigurationFragment);
+        closeFragment(mEdProfileFragment);
     }
 
     private void closeDrawerLayout() {

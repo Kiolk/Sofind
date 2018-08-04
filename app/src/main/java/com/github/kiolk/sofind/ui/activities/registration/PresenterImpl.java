@@ -18,7 +18,7 @@ public class PresenterImpl implements Presenter {
         if(mRegistrationView.isValidEmailAndPassword()){
             DataManager.getInstance().userLogin(email, password, new SimpleResultListener() {
                 @Override
-                public void onSucces() {
+                public void onSuccess() {
                     mRegistrationView.showProgressBar(false);
                     mRegistrationView.success();
                 }
@@ -42,12 +42,22 @@ public class PresenterImpl implements Presenter {
         if(mRegistrationView.isValidRegistrationForm()){
             DataManager.getInstance().registerNewUser(email, password, new SimpleResultListener() {
                 @Override
-                public void onSucces() {
+                public void onSuccess() {
                     UserModel user = mRegistrationView.getNewUserInformation();
                     user.setUserId(DataManager.getInstance().getUserUid());
-                    DataManager.getInstance().saveNewUser(user);
-                    mRegistrationView.showProgressBar(false);
-                    mRegistrationView.success();
+                    DataManager.getInstance().saveNewUser(user, new SimpleResultListener(){
+                        @Override
+                        public void onSuccess() {
+                            mRegistrationView.showProgressBar(false);
+                            mRegistrationView.success();
+                        }
+
+                        @Override
+                        public void onError(String message) {
+                            mRegistrationView.showProgressBar(false);
+                            mRegistrationView.error(1);
+                        }
+                    });
                 }
 
                 @Override

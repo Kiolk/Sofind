@@ -17,5 +17,5 @@ public interface RegistrationModel {
 
     String getUserUid();
 
-    void saveNewUser(UserModel user);
+    void saveNewUser(UserModel user, SimpleResultListener listener);
 }
