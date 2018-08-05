@@ -18,7 +18,7 @@ import com.github.kiolk.sofind.R;
 import com.github.kiolk.sofind.ui.activities.SplashActivity;
 import com.github.kiolk.sofind.ui.activities.base.BaseActivity;
 import com.github.kiolk.sofind.ui.fragments.ConfigurationFragment;
-import com.github.kiolk.sofind.ui.fragments.CreateSoundFragment;
+import com.github.kiolk.sofind.ui.fragments.createsound.CreateSoundFragment;
 import com.github.kiolk.sofind.ui.fragments.profile.ProfileFragment;
 import com.github.kiolk.sofind.ui.fragments.WorldSoundsFragment;
 import com.github.kiolk.sofind.ui.fragments.yoursounds.YourSoundsFragment;
@@ -60,11 +60,12 @@ public class HomeActivity extends BaseActivity implements HomeView{
                 Toast.makeText(getBaseContext(), "Selected search", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.save_menu_item:
+                mCreateSoundFragment.saveNewSofind();
                 Toast.makeText(getBaseContext(), "Selected save", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.profile_menu_item:
                 mEdProfileFragment.saveEditProfile();
-                Toast.makeText(getBaseContext(), "Selected save", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getBaseContext(), "Selected save", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
@@ -101,6 +102,7 @@ public class HomeActivity extends BaseActivity implements HomeView{
                         break;
                     case R.id.create_new_sounds_menu_item:
                         showFragment(mCreateSoundFragment);
+                        mCreateSoundFragment.prepareForm();
                         Toast.makeText(getBaseContext(), "Selected create user sound", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.edit_profile_menu_item:

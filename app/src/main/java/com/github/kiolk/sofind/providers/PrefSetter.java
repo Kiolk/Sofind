@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.github.kiolk.sofind.data.models.UserModel;
+
+import java.io.Serializable;
+
 import static com.github.kiolk.sofind.providers.PrefGetter.APP_PREFERENCES;
 
 public class PrefSetter {

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/card_single_sound"/>
+
+    <EditText
+        android:id="@+id/new_sound_body_edit_text"
+        android:minLines="5"
+        android:layout_gravity="top"
+        android:background="?attr/backgroundColor"
+        android:textColor="?attr/primaryTextColor"
+        android:gravity="top"
+        android:padding="@dimen/STANDART_PADDING"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

@@ -5,8 +5,10 @@ import android.support.annotation.Nullable;
 
 import com.github.kiolk.sofind.data.ObjectResultListener;
 import com.github.kiolk.sofind.data.SimpleResultListener;
+import com.github.kiolk.sofind.data.models.SofindModel;
 import com.github.kiolk.sofind.data.models.UserModel;
 import com.github.kiolk.sofind.ui.activities.registration.RegistrationModel;
+import com.github.kiolk.sofind.ui.fragments.createsound.ISoundManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,20 +22,23 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-public class DataManager implements RegistrationModel, RealDataBaseModel {
+public class DataManager implements RegistrationModel, RealDataBaseModel, ISoundManager {
 
     private static final String SOFIND_USER =  "SofindUsers";
+    private static final String SOFIND_ITEMS =  "SofindItems";
 
     private static DataManager mInstance;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mUserDatabaseReference;
+    private DatabaseReference mSoundDatabaseReference;
     private ChildEventListener mChildEventListener;
 
     private DataManager() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mUserDatabaseReference = mFirebaseDatabase.getReference().child(SOFIND_USER);
+        mSoundDatabaseReference = mFirebaseDatabase.getReference().child(SOFIND_ITEMS);
     }
 
     public static DataManager getInstance() {
@@ -119,6 +124,7 @@ public class DataManager implements RegistrationModel, RealDataBaseModel {
                         }else{
                             listener.onError("Error");
                         }
+
                     }
                 });
     }
@@ -165,5 +171,20 @@ public class DataManager implements RegistrationModel, RealDataBaseModel {
     @Override
     public List<UserModel> getAllUsers() {
         return null;
+    }
+
+    @Override
+    public void updateNewSound(SofindModel sofind, final SimpleResultListener listener) {
+        mSoundDatabaseReference.child(sofind.getUserid() + sofind.getCreateTime())
+                .setValue(sofind).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    listener.onSuccess();
+                }else{
+                    listener.onError("Error");
+                }
+            }
+        });
     }
 }

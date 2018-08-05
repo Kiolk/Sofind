@@ -13,7 +13,6 @@ import com.github.kiolk.sofind.R;
 import com.github.kiolk.sofind.data.models.SofindModel;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class SoundRecylerAdapter extends RecyclerView.Adapter<SoundRecylerAdapter.SoundViewHolder> {
 

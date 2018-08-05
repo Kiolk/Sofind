@@ -27,6 +27,7 @@
     <string name="MISTEKE">Mistake</string>
     <string name="INPUT_MIN_TWO_SYMBOL">Input min two leters</string>
     <string name="INPUT_CORRECT_AGE">Input correct age</string>
+    <string name="MORE_SYMBOLS">Max number of caraters is</string>
 
     <string-array name="SETTING_ARRAY">
         <item>Change language</item>

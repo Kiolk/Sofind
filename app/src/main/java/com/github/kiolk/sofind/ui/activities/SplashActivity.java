@@ -7,6 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.github.kiolk.sofind.R;
+import com.github.kiolk.sofind.data.ObjectResultListener;
+import com.github.kiolk.sofind.data.managers.DataManager;
+import com.github.kiolk.sofind.data.models.UserModel;
+import com.github.kiolk.sofind.providers.UserInfoProvider;
 import com.github.kiolk.sofind.ui.activities.base.BaseActivity;
 import com.github.kiolk.sofind.ui.activities.home.HomeActivity;
 import com.github.kiolk.sofind.ui.activities.registration.RegistrationActivity;
@@ -61,9 +65,16 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void startHomeActivity() {
-//        Toast.makeText(getBaseContext(), getBaseContext().getResources()
-//                .getString(R.string.SUCCES_LOGIN), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getBaseContext(), HomeActivity.class);
+        DataManager.getInstance().getUserInformation(new ObjectResultListener() {
+            @Override
+            public void resultProcess(Object result) {
+                UserModel userInformation = (UserModel) result;
+                UserInfoProvider.saveUserId(getBaseContext(), userInformation.getUserId());
+                UserInfoProvider.saveUserName(getBaseContext(), userInformation.getUserName(),
+                        userInformation.getSurname());
+            }
+        });
         startActivity(intent);
     }
 }
