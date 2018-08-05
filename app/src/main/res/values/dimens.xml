@@ -3,7 +3,9 @@
     <dimen name="MENU_WIDTH">250dp</dimen>
     <dimen name="HEADER_HEIGHT">180dp</dimen>
     <dimen name="ICON_SIZE">60dp</dimen>
+    <dimen name="SMALL_ICON_SIZE">40dp</dimen>
     <dimen name="STANDART_PADDING">5dp</dimen>
     <dimen name="NORMAL_TEXT_SIZE">24sp</dimen>
     <dimen name="BIG_PADDING">20dp</dimen>
+    <dimen name="SOUND_ITEM_TEXT_SIZE">28sp</dimen>
 </resources>

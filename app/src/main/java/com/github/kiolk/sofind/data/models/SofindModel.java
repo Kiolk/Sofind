@@ -5,6 +5,7 @@ public class SofindModel {
     private String mUserid;
     private String mMindMessage;
     private long mCreateTime;
+    private int mNumberOfLikes;
 
     private int mLikes;
 
@@ -38,5 +39,13 @@ public class SofindModel {
 
     public void setLikes(int mLikes) {
         this.mLikes = mLikes;
+    }
+
+    public int getNumberOfLikes() {
+        return mNumberOfLikes;
+    }
+
+    public void setNumberOfLikes(){
+        ++mNumberOfLikes;
     }
 }

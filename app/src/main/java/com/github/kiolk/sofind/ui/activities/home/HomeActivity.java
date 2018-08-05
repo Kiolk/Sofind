@@ -21,7 +21,7 @@ import com.github.kiolk.sofind.ui.fragments.ConfigurationFragment;
 import com.github.kiolk.sofind.ui.fragments.CreateSoundFragment;
 import com.github.kiolk.sofind.ui.fragments.profile.ProfileFragment;
 import com.github.kiolk.sofind.ui.fragments.WorldSoundsFragment;
-import com.github.kiolk.sofind.ui.fragments.YourSoundsFragment;
+import com.github.kiolk.sofind.ui.fragments.yoursounds.YourSoundsFragment;
 
 public class HomeActivity extends BaseActivity implements HomeView{
 
@@ -93,6 +93,7 @@ public class HomeActivity extends BaseActivity implements HomeView{
                     case R.id.user_sounds_menu_item:
                         Toast.makeText(getBaseContext(), "Selected user sounds", Toast.LENGTH_SHORT).show();
                         showFragment(mYouSoundFragment);
+                        mYouSoundFragment.showUserSounds();
                         break;
                     case R.id.world_sounds_menu_item:
                         showFragment(mWorldSoundFragment);
