@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.github.kiolk.sofind.R;
 import com.github.kiolk.sofind.data.adapters.SoundRecylerAdapter;
@@ -25,6 +26,7 @@ public class WorldSoundsFragment extends BaseFragment implements IYouSoundView {
     private SoundRecylerAdapter mAdapter;
     private List<FullSofindModel> mListSofinds;
     private IYouSoundPresenter mPresenter;
+    private int updatePoint = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +40,16 @@ public class WorldSoundsFragment extends BaseFragment implements IYouSoundView {
     public void onPause() {
         super.onPause();
         mPresenter.unSubscribeOnSounds();
+    }
+
+    @Override
+    public void addLateSound(FullSofindModel userSofind) {
+            if(updatePoint == 0){
+                updatePoint = mListSofinds.size();
+            }
+        mListSofinds.add(updatePoint, userSofind);
+        mAdapter.notifyDataSetChanged();
+
     }
 
     @Nullable
@@ -75,5 +87,20 @@ public class WorldSoundsFragment extends BaseFragment implements IYouSoundView {
     @Override
     public void setUserFilter() {
 
+    }
+
+    @Override
+    public void shouUpdateProgressBar(boolean isShow) {
+        ProgressBar progressBar = getView().findViewById(R.id.update_progress_bar);
+        if(isShow){
+            progressBar.setVisibility(View.VISIBLE);
+        }else{
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void resetAddPoint() {
+        updatePoint = 0;
     }
 }

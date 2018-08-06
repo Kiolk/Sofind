@@ -16,5 +16,7 @@ public interface ISoundManager {
     void getUserFullName(String userId, ObjectResultListener listener);
 
     void updateSound(SofindModel updatedSofind);
+
+    void loadMoreSofinds(IYouSoundPresenter presenter, int getAdditional);
 }
 

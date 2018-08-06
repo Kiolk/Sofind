@@ -8,7 +8,7 @@ import java.util.Locale;
 
 public class ConverterUtil {
 
-    public static final String DAY_PATTERN = "dd MMM yyyy";
+    public static final String DAY_PATTERN = "dd MMM yyyy hh:mm";
 
     public static String convertEpochTime(Context context, Long date, String pattern){
         Date day = new Date(date);

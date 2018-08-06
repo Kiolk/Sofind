@@ -42,6 +42,17 @@
 
             </FrameLayout>
 
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/add_new_sofind_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/STANDART_PADDING"
+                app:fabSize="normal"
+                android:visibility="gone"
+                app:backgroundTint="@color/DARK_BACKGROUND_COLOR"
+                android:src="@drawable/ic_speaking"
+                android:layout_gravity="right|bottom"/>
+
 
         </android.support.design.widget.CoordinatorLayout>
 

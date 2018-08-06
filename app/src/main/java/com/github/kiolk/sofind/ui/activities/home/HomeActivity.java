@@ -1,20 +1,29 @@
 package com.github.kiolk.sofind.ui.activities.home;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.kiolk.sofind.R;
+import com.github.kiolk.sofind.data.SimpleResultListener;
+import com.github.kiolk.sofind.data.managers.DataManager;
+import com.github.kiolk.sofind.data.models.FullSofindModel;
+import com.github.kiolk.sofind.providers.UserInfoProvider;
 import com.github.kiolk.sofind.ui.activities.SplashActivity;
 import com.github.kiolk.sofind.ui.activities.base.BaseActivity;
 import com.github.kiolk.sofind.ui.fragments.ConfigurationFragment;
@@ -22,6 +31,8 @@ import com.github.kiolk.sofind.ui.fragments.createsound.CreateSoundFragment;
 import com.github.kiolk.sofind.ui.fragments.profile.ProfileFragment;
 import com.github.kiolk.sofind.ui.fragments.WorldSoundsFragment;
 import com.github.kiolk.sofind.ui.fragments.yoursounds.YourSoundsFragment;
+
+import java.util.zip.Inflater;
 
 public class HomeActivity extends BaseActivity implements HomeView{
 
@@ -31,14 +42,56 @@ public class HomeActivity extends BaseActivity implements HomeView{
     private ConfigurationFragment mConfigurationFragment = new ConfigurationFragment();
     private HomePresenterImpl mPresenter;
     private ProfileFragment mEdProfileFragment = new ProfileFragment();
+    private FloatingActionButton mAddNewSofind;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        setupFloatActionButton();
         setupNavigationView();
         setupToolBar();
         mPresenter = new HomePresenterImpl(this);
+
+    }
+
+    private void setupFloatActionButton() {
+        mAddNewSofind = findViewById(R.id.add_new_sofind_fab);
+        mAddNewSofind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setNewSofindDialog();
+            }
+        });
+    }
+
+    private void setNewSofindDialog() {
+       LayoutInflater inflater  = getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_new_sofind, null);
+        final EditText userInput = view.findViewById(R.id.edit_text_dialog);
+        AlertDialog.Builder sofindDialogBuilder = new AlertDialog.Builder(this);
+        sofindDialogBuilder.setTitle(R.string.NEW_SOUND).setPositiveButton(R.string.SAVE, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                FullSofindModel sofindModel = new FullSofindModel();
+                sofindModel.setMindMessage(userInput.getText().toString());
+                sofindModel.setCreateTime(System.currentTimeMillis());
+                sofindModel.setUserid(UserInfoProvider.getUserId(getBaseContext()));
+               DataManager.getInstance().updateNewSound(sofindModel, new SimpleResultListener() {
+                   @Override
+                   public void onSuccess() {
+                       Toast.makeText(getBaseContext(), "SoundU updated", Toast.LENGTH_SHORT).show();
+                   }
+
+                   @Override
+                   public void onError(String message) {
+
+                   }
+               });
+            }
+        });
+        sofindDialogBuilder.setView(view);
+        sofindDialogBuilder.create().show();
     }
 
     @Override
@@ -92,6 +145,7 @@ public class HomeActivity extends BaseActivity implements HomeView{
                 item.setChecked(true);
                 switch (item.getItemId()) {
                     case R.id.user_sounds_menu_item:
+                        mAddNewSofind.setVisibility(View.VISIBLE);
                         Toast.makeText(getBaseContext(), "Selected user sounds", Toast.LENGTH_SHORT).show();
                         showFragment(mYouSoundFragment);
                         mYouSoundFragment.setUserFilter();
@@ -99,6 +153,7 @@ public class HomeActivity extends BaseActivity implements HomeView{
 //
                         break;
                     case R.id.world_sounds_menu_item:
+                        mAddNewSofind.setVisibility(View.VISIBLE);
                         showFragment(mWorldSoundFragment);
                         mWorldSoundFragment.showUserSounds();
                         Toast.makeText(getBaseContext(), "Selected world sounds", Toast.LENGTH_SHORT).show();
@@ -129,6 +184,7 @@ public class HomeActivity extends BaseActivity implements HomeView{
     }
 
     private void closeFragments() {
+        mAddNewSofind.setVisibility(View.GONE);
         closeFragment(mYouSoundFragment);
         closeFragment(mWorldSoundFragment);
         closeFragment(mCreateSoundFragment);

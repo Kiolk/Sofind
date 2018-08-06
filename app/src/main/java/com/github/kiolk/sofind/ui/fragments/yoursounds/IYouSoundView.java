@@ -7,6 +7,10 @@ public interface IYouSoundView {
 
     void showUserSounds();
     void setUserSound(FullSofindModel userSofind);
+    void addLateSound(FullSofindModel userSofind);
 
     void setUserFilter();
+    void shouUpdateProgressBar(boolean isShow);
+
+    void resetAddPoint();
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.kiolk.sofind.R;
 import com.github.kiolk.sofind.data.models.FullSofindModel;
@@ -54,6 +55,10 @@ public class SoundRecylerAdapter extends RecyclerView.Adapter<SoundRecylerAdapte
                 notifyDataSetChanged();
             }
         });
+        if(position == mSofindList.size() - 1){
+            mPresenter.loadMoreData(mSofindList.size());
+            Toast.makeText(mContext, "Attach last item", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

@@ -43,9 +43,12 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
     private DatabaseReference mSoundDatabaseReference;
     private ChildEventListener mChildEventListener;
     private ChildEventListener mSoundChildEventListener;
+    private ChildEventListener mUpdateChildListener;
 
     private List<SofindModel> mSofindList = new ArrayList<>();
     private Map<String, String> mUsers = new HashMap<>();
+
+    private int mLastSofinds = 8;
 
     private DataManager() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -203,7 +206,7 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
 
     @Override
     public void subscribeOnUsersSounds(final IYouSoundPresenter presenter) {
-        final Query lastItems = mSoundDatabaseReference.orderByKey().limitToLast(20);
+        final Query lastItems = mSoundDatabaseReference.orderByKey().limitToLast(mLastSofinds);
         if (mSoundChildEventListener == null) {
             mSoundChildEventListener = new ChildEventListener() {
                 @Override
@@ -242,6 +245,10 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
         if (mSoundChildEventListener != null) {
             mSoundDatabaseReference.removeEventListener(mSoundChildEventListener);
             mSoundChildEventListener = null;
+        }
+        if (mUpdateChildListener != null){
+            mSoundDatabaseReference.removeEventListener(mUpdateChildListener);
+            mUpdateChildListener = null;
         }
     }
 
@@ -294,10 +301,10 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 FullSofindModel sofind = dataSnapshot.getValue(FullSofindModel.class);
-                if(sofind.getCreateTime() == updatedSofind.getCreateTime()){
+                if (sofind.getCreateTime() == updatedSofind.getCreateTime()) {
                     int likes = sofind.getLikes();
                     updatedSofind.setLikes(likes + 1);
-                    mSoundDatabaseReference.child(updatedSofind.getUserid()+updatedSofind.getCreateTime()).setValue(updatedSofind);
+                    mSoundDatabaseReference.child(updatedSofind.getUserid() + updatedSofind.getCreateTime()).setValue(updatedSofind);
                     single.removeEventListener(this);
                 }
             }
@@ -323,5 +330,83 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
             }
         });
 //        mSoundDatabaseReference.child(updatedSofind.getUserid()+updatedSofind.getCreateTime()).setValue(updatedSofind);
+    }
+
+    @Override
+    public void loadMoreSofinds(final IYouSoundPresenter presenter, int getSofinds) {
+//        mLastSofinds += 20;
+        if(mUpdateChildListener == null){
+            mUpdateChildListener = new ChildEventListener() {
+                long lastUpdated = 0L;
+
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    FullSofindModel sofind = dataSnapshot.getValue(FullSofindModel.class);
+                    if (lastUpdated == 0) {
+                        lastUpdated = sofind.getCreateTime();
+                    }
+//                    if (lastUpdated >= sofind.getCreateTime()) {
+                        presenter.updateAditionalItems(sofind);
+//                    }
+
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            };
+        }
+        mSoundDatabaseReference.orderByKey().limitToLast(getSofinds).addChildEventListener(mUpdateChildListener);
+//        mSoundDatabaseReference.orderByKey().limitToLast(getSofinds).addChildEventListener(new ChildEventListener() {
+//            long lastUpdated = 0L;
+//
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                FullSofindModel sofind = dataSnapshot.getValue(FullSofindModel.class);
+//                if (lastUpdated == 0) {
+//                    lastUpdated = sofind.getCreateTime();
+//                }
+//                if (lastUpdated >= sofind.getCreateTime()) {
+//                    presenter.updateAditionalItems(sofind);
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 }
