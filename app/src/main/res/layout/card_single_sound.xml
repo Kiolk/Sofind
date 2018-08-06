@@ -41,7 +41,7 @@
            android:layout_height="wrap_content"
            android:layout_alignTop="@id/like_image_image_view"
            android:gravity="center"
-           android:textSize="@dimen/NORMAL_TEXT_SIZE"
+           android:textSize="@dimen/SMALL_TEXT_SIZE"
            android:textColor="?attr/primaryTextColor"
            android:layout_alignBottom="@+id/like_image_image_view"
            android:layout_alignParentRight="true"

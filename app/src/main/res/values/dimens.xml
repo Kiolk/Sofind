@@ -8,4 +8,5 @@
     <dimen name="NORMAL_TEXT_SIZE">24sp</dimen>
     <dimen name="BIG_PADDING">20dp</dimen>
     <dimen name="SOUND_ITEM_TEXT_SIZE">28sp</dimen>
+    <dimen name="SMALL_TEXT_SIZE">12sp</dimen>
 </resources>

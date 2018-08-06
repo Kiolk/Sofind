@@ -94,10 +94,13 @@ public class HomeActivity extends BaseActivity implements HomeView{
                     case R.id.user_sounds_menu_item:
                         Toast.makeText(getBaseContext(), "Selected user sounds", Toast.LENGTH_SHORT).show();
                         showFragment(mYouSoundFragment);
+                        mYouSoundFragment.setUserFilter();
                         mYouSoundFragment.showUserSounds();
+//
                         break;
                     case R.id.world_sounds_menu_item:
                         showFragment(mWorldSoundFragment);
+                        mWorldSoundFragment.showUserSounds();
                         Toast.makeText(getBaseContext(), "Selected world sounds", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.create_new_sounds_menu_item:

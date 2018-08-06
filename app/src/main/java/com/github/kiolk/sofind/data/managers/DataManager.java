@@ -5,10 +5,13 @@ import android.support.annotation.Nullable;
 
 import com.github.kiolk.sofind.data.ObjectResultListener;
 import com.github.kiolk.sofind.data.SimpleResultListener;
+import com.github.kiolk.sofind.data.models.FullSofindModel;
 import com.github.kiolk.sofind.data.models.SofindModel;
 import com.github.kiolk.sofind.data.models.UserModel;
 import com.github.kiolk.sofind.ui.activities.registration.RegistrationModel;
 import com.github.kiolk.sofind.ui.fragments.createsound.ISoundManager;
+import com.github.kiolk.sofind.ui.fragments.yoursounds.IYouSoundPresenter;
+import com.github.kiolk.sofind.ui.fragments.yoursounds.YouSoundPresenter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -19,13 +22,18 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DataManager implements RegistrationModel, RealDataBaseModel, ISoundManager {
 
-    private static final String SOFIND_USER =  "SofindUsers";
-    private static final String SOFIND_ITEMS =  "SofindItems";
+    private static final String SOFIND_USER = "SofindUsers";
+    private static final String SOFIND_ITEMS = "SofindItems";
 
     private static DataManager mInstance;
 
@@ -34,6 +42,10 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
     private DatabaseReference mUserDatabaseReference;
     private DatabaseReference mSoundDatabaseReference;
     private ChildEventListener mChildEventListener;
+    private ChildEventListener mSoundChildEventListener;
+
+    private List<SofindModel> mSofindList = new ArrayList<>();
+    private Map<String, String> mUsers = new HashMap<>();
 
     private DataManager() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -118,10 +130,10 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
 //                            task.getException().getMessage();
                             listener.onSuccess();
-                        }else{
+                        } else {
                             listener.onError("Error");
                         }
 
@@ -132,13 +144,14 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
     @Override
     public void getUserInformation(final ObjectResultListener listener) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null) {
+        if (user != null) {
             final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
             mChildEventListener = new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     UserModel user = dataSnapshot.getValue(UserModel.class);
-                    if(user != null && user.getUserId().equals(userId)){
+                    mUsers.put(user.getUserId(), user.getUserName() + " " + user.getSurname());
+                    if (user != null && user.getUserId().equals(userId)) {
                         listener.resultProcess(user);
                         mUserDatabaseReference.removeEventListener(mChildEventListener);
                     }
@@ -179,12 +192,136 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
                 .setValue(sofind).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     listener.onSuccess();
-                }else{
+                } else {
                     listener.onError("Error");
                 }
             }
         });
+    }
+
+    @Override
+    public void subscribeOnUsersSounds(final IYouSoundPresenter presenter) {
+        final Query lastItems = mSoundDatabaseReference.orderByKey().limitToLast(20);
+        if (mSoundChildEventListener == null) {
+            mSoundChildEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    presenter.updateYouSound(dataSnapshot.getValue(FullSofindModel.class));
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                    presenter.updateYouSound(dataSnapshot.getValue(SofindModel.class));
+//                    lastItems.removeEventListener(mSoundChildEventListener);
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            };
+        }
+        lastItems.addChildEventListener(mSoundChildEventListener);
+//        mSoundDatabaseReference.addChildEventListener(mSoundChildEventListener);
+    }
+
+    @Override
+    public void unSubscribeOnUsersSounds() {
+        if (mSoundChildEventListener != null) {
+            mSoundDatabaseReference.removeEventListener(mSoundChildEventListener);
+            mSoundChildEventListener = null;
+        }
+    }
+
+    @Override
+    public void getUserFullName(final String userId, final ObjectResultListener listener) {
+        String fullName = mUsers.get(userId);
+        if (fullName != null) {
+            listener.resultProcess(fullName);
+        } else {
+            mUserDatabaseReference.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    UserModel user = dataSnapshot.getValue(UserModel.class);
+                    mUsers.put(user.getUserId(), user.getUserName() + " " + user.getSurname());
+                    if (user != null && user.getUserId().equals(userId)) {
+                        String fullname = user.getUserName() + " " + user.getSurname();
+                        mUserDatabaseReference.removeEventListener(this);
+                        listener.resultProcess(fullname);
+                    }
+//                mUserDatabaseReference.removeEventListener(this);
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
+
+    @Override
+    public void updateSound(final SofindModel updatedSofind) {
+        final Query single = mSoundDatabaseReference;
+        single.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                FullSofindModel sofind = dataSnapshot.getValue(FullSofindModel.class);
+                if(sofind.getCreateTime() == updatedSofind.getCreateTime()){
+                    int likes = sofind.getLikes();
+                    updatedSofind.setLikes(likes + 1);
+                    mSoundDatabaseReference.child(updatedSofind.getUserid()+updatedSofind.getCreateTime()).setValue(updatedSofind);
+                    single.removeEventListener(this);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+//        mSoundDatabaseReference.child(updatedSofind.getUserid()+updatedSofind.getCreateTime()).setValue(updatedSofind);
     }
 }

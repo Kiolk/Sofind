@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 
 import com.github.kiolk.sofind.R;
 import com.github.kiolk.sofind.data.adapters.SoundRecylerAdapter;
+import com.github.kiolk.sofind.data.models.FullSofindModel;
 import com.github.kiolk.sofind.data.models.SofindModel;
+import com.github.kiolk.sofind.providers.UserInfoProvider;
 import com.github.kiolk.sofind.ui.fragments.base.BaseFragment;
 
 import java.util.ArrayList;
@@ -19,22 +21,17 @@ import java.util.List;
 
 public class YourSoundsFragment extends BaseFragment implements IYouSoundView {
 
-//   super.titleResource = R.string.YOUR_SOUNDS;
-
+    private String mUserId;
     private SoundRecylerAdapter mAdapter;
-    private List<SofindModel> mListSofinds;
+    private List<FullSofindModel> mListSofinds;
+    private IYouSoundPresenter mPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListSofinds = new ArrayList<SofindModel>();
-        SofindModel ex =new SofindModel();
-        ex.setNumberOfLikes();
-        ex.setUserid("23");
-        ex.setCreateTime(232323L);
-        ex.setMindMessage("Per asper sa ad aster");
-        mListSofinds.add(ex);
-        mAdapter = new SoundRecylerAdapter(getContext(), mListSofinds);
+        mListSofinds = new ArrayList<>();
+        mAdapter = new SoundRecylerAdapter(getContext(), mListSofinds, mPresenter);
+        mPresenter = new YouSoundPresenter(this);
     }
 
     @Nullable
@@ -60,17 +57,31 @@ public class YourSoundsFragment extends BaseFragment implements IYouSoundView {
         RecyclerView recycler = getView().findViewById(R.id.general_fragment_recycler_view);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(mAdapter);
-        SofindModel ex =new SofindModel();
-        ex.setNumberOfLikes();
-        ex.setUserid("23");
-        ex.setCreateTime(232323L);
-        ex.setMindMessage("Not hurt neigbour");
-        setUserSound(ex);
+        mPresenter.subscribeOnSounds();
     }
 
     @Override
-    public void setUserSound(SofindModel userSofind) {
-        mListSofinds.add(userSofind);
-        mAdapter.notifyDataSetChanged();
+    public void onPause() {
+        super.onPause();
+        mPresenter.unSubscribeOnSounds();
+    }
+
+    @Override
+    public void setUserSound(FullSofindModel userSofind) {
+        if(mUserId != null ){
+            if(mUserId.equals(userSofind.getUserid())){
+                mListSofinds.add(0, userSofind);
+                mAdapter.notifyDataSetChanged();
+            }
+        }else{
+            mListSofinds.add(0, userSofind);
+            mAdapter.notifyDataSetChanged();
+        }
+
+    }
+
+    @Override
+    public void setUserFilter() {
+        mUserId = UserInfoProvider.getUserId(getContext());
     }
 }

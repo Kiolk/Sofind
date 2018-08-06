@@ -10,18 +10,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.kiolk.sofind.R;
+import com.github.kiolk.sofind.data.models.FullSofindModel;
 import com.github.kiolk.sofind.data.models.SofindModel;
+import com.github.kiolk.sofind.ui.fragments.yoursounds.IYouSoundPresenter;
+import com.github.kiolk.sofind.util.ConverterUtil;
 
 import java.util.List;
 
 public class SoundRecylerAdapter extends RecyclerView.Adapter<SoundRecylerAdapter.SoundViewHolder> {
 
-    private List<SofindModel> mSofindList;
+    private List<FullSofindModel> mSofindList;
     private Context mContext;
+    private IYouSoundPresenter mPresenter;
 
-    public SoundRecylerAdapter(Context context, List<SofindModel> sofindList){
+    public SoundRecylerAdapter(Context context, List<FullSofindModel> sofindList, IYouSoundPresenter presenter){
         mSofindList = sofindList;
         mContext = context;
+        mPresenter = presenter;
     }
 
 
@@ -35,12 +40,20 @@ public class SoundRecylerAdapter extends RecyclerView.Adapter<SoundRecylerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull SoundRecylerAdapter.SoundViewHolder holder, int position) {
-        SofindModel singlSofind = mSofindList.get(position);
-        holder.mUserName.setText(singlSofind.getUserid());
+        final FullSofindModel singlSofind = mSofindList.get(position);
+        holder.mUserName.setText(singlSofind.getUserFullName());
         holder.mSofindBody.setText(singlSofind.getMindMessage());
-        //TODO Refactor corect display time
-        holder.mDate.setText(singlSofind.getCreateTime() + "");
-        holder.mLikes.setText(singlSofind.getNumberOfLikes() + "");
+        //TODO Refactor correct display time
+        holder.mDate.setText(ConverterUtil.convertEpochTime(mContext, singlSofind.getCreateTime(), ConverterUtil.DAY_PATTERN));
+        holder.mLikes.setText(singlSofind.getLikes() + "");
+        holder.mHeart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                singlSofind.setLikes(singlSofind.getLikes()+1);
+                mPresenter.saveUpdatedSofind(singlSofind);
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
