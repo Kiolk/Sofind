@@ -1,6 +1,7 @@
 package com.github.kiolk.sofind.providers;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.github.kiolk.sofind.R;
 
@@ -8,6 +9,8 @@ public class ThemeProvider {
 
     private static final String THEME = "Theme";
     private static final String ACCENT_COLOR = "Theme";
+    public static final String DAY_MODE = "day";
+    public static final String NIGHT_MODE = "night";
 
 
     public static void applyTheme(Activity activity) {
@@ -27,9 +30,10 @@ public class ThemeProvider {
                     case "blue":
                         break;
                     default:
+                        selectedTheme = R.style.Light;
                         break;
-
                 }
+//                selectedTheme = R.style.Light;
                 break;
             case "night":
                 switch (accaentColor) {
@@ -38,14 +42,42 @@ public class ThemeProvider {
                     case "blue":
                         break;
                     default:
+                        selectedTheme = R.style.Dark;
                         break;
                 }
                 break;
             default:
-                selectedTheme = R.style.Light;
+                selectedTheme = R.style.Dark;
                 break;
         }
 
         return selectedTheme;
     }
+
+    public static String getThemMode(Context context) {
+        return PrefGetter.getString(context, THEME);
+    }
+
+    public static void setThemeMode(Context context, String modType) {
+        PrefSetter.putString(context, THEME, modType);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

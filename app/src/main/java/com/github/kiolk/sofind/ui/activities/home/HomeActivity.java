@@ -263,4 +263,26 @@ public class HomeActivity extends BaseActivity implements HomeView{
         super.onPause();
         mPresenter.onPause();
     }
+
+    public void restart(){
+        Intent intent = new Intent(getBaseContext(), HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

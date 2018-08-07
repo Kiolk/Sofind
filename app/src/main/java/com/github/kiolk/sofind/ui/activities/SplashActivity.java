@@ -10,6 +10,8 @@ import com.github.kiolk.sofind.R;
 import com.github.kiolk.sofind.data.ObjectResultListener;
 import com.github.kiolk.sofind.data.managers.DataManager;
 import com.github.kiolk.sofind.data.models.UserModel;
+import com.github.kiolk.sofind.providers.LanguageProvider;
+import com.github.kiolk.sofind.providers.PrefGetter;
 import com.github.kiolk.sofind.providers.UserInfoProvider;
 import com.github.kiolk.sofind.ui.activities.base.BaseActivity;
 import com.github.kiolk.sofind.ui.activities.home.HomeActivity;
@@ -26,9 +28,18 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        checkLocale();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         checkAuthentication();
+    }
+
+    private void checkLocale() {
+        String language = LanguageProvider.getLanguage(getBaseContext());
+        if(language.equals(PrefGetter.DEFAULT_VALUE)){
+            language = LanguageProvider.LANGUAGE_EN;
+        }
+        LanguageProvider.changeLocale(getBaseContext(), language);
     }
 
     private void checkAuthentication(){

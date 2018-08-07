@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Sofind</string>
-    <string name="YOUR_SOUNDS">Your sounds</string>
+    <string name="YOUR_SOUNDS">Твои звуки мыслей</string>
     <string name="WORLD_SOUNDS">World sounds</string>
     <string name="CREATE_SOUND">Create sound</string>
     <string name="EDIT_PROFILE">Edit profile</string>
@@ -55,10 +55,5 @@
         <item>be</item>
         <item>en</item>
         <item>ru</item>
-    </string-array>
-    <string-array name="LANGUAGES_FULL_NAME">
-        <item>Беларуская</item>
-        <item>English</item>
-        <item>Русский</item>
     </string-array>
 </resources>

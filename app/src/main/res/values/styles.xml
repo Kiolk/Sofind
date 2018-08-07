@@ -11,6 +11,7 @@
     <declare-styleable name="AppTheme">
         <attr name="primaryTextColor" format="color"/>
         <attr name="backgroundColor" format="color"/>
+        <attr name="secondBackgroundColor" format="color"/>
         <attr name="menuTextColor" format="integer"/>
         <attr name="iconLampColor" format="color"/>
         <attr name="colorAccent" format="color"/>
@@ -28,16 +29,19 @@
     <style name="Light" parent="MyTheme">
         <item name="menuTextColor">@color/DARK_GRAY_TEXT_COLOR</item>
         <item name="backgroundColor">@color/LIGHT_BACKGROUND_COLOR</item>
+        <item name="secondBackgroundColor">@color/LIGHT_SECOND_BACKGROUND_COLOR</item>
         <item name="primaryTextColor">@color/DARK_GRAY_TEXT_COLOR</item>
     </style>
 
     <style name="Dark" parent="MyTheme">
         <item name="menuTextColor">@color/LIGHT_GRAY_TEXT_COLOR</item>
         <item name="backgroundColor">@color/DARK_BACKGROUND_COLOR</item>
+        <item name="secondBackgroundColor">@color/DARK_SECOND_BACKGROUND_COLOR</item>
         <item name="primaryTextColor">@color/LIGHT_GRAY_TEXT_COLOR</item>
     </style>
 
     <style name="EditBlockStyle">
+        <item name="android:theme">?attr/primaryTextColor</item>
         <item name="android:paddingLeft">@dimen/BIG_PADDING</item>
         <item name="android:layout_marginLeft">@dimen/BIG_PADDING</item>
         <item name="android:layout_marginRight">@dimen/BIG_PADDING</item>
