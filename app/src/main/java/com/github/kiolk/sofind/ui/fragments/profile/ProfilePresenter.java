@@ -8,6 +8,7 @@ import com.github.kiolk.sofind.data.models.UserModel;
 public class ProfilePresenter implements IProfilePresenter {
 
     private IProfileView mProfileView;
+    private UserModel mUserInformation;
 
     public ProfilePresenter(IProfileView profileView) {
         mProfileView = profileView;
@@ -15,6 +16,10 @@ public class ProfilePresenter implements IProfilePresenter {
 
     @Override
     public void saveUser(UserModel user) {
+        if(user.getPassword().equals("")){
+            user.setPassword(mUserInformation.getPassword());
+        }
+        user.setUserId(mUserInformation.getUserId());
         DataManager.getInstance().saveNewUser(user, new SimpleResultListener() {
             @Override
             public void onSuccess() {
@@ -30,14 +35,24 @@ public class ProfilePresenter implements IProfilePresenter {
 
     @Override
     public void getUserInformation() {
+        mProfileView.showProgressBar(true);
         DataManager.getInstance().getUserInformation(new ObjectResultListener() {
             @Override
             public void resultProcess(Object result) {
                 if (result != null && result instanceof UserModel) {
-                    mProfileView.setInformation((UserModel) result);
+                    mProfileView.showProgressBar(false);
+                    mUserInformation = (UserModel) result;
+                    mProfileView.setInformation(mUserInformation);
                 }
             }
         });
 
     }
+
+    @Override
+    public boolean confirmUserPassword(String password) {
+        return password.equals(mUserInformation.getPassword());
+    }
+
+
 }

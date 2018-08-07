@@ -12,6 +12,7 @@ import com.github.kiolk.sofind.ui.activities.registration.RegistrationModel;
 import com.github.kiolk.sofind.ui.fragments.createsound.ISoundManager;
 import com.github.kiolk.sofind.ui.fragments.yoursounds.IYouSoundPresenter;
 import com.github.kiolk.sofind.ui.fragments.yoursounds.YouSoundPresenter;
+import com.github.kiolk.sofind.util.ConstantUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -206,7 +207,7 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
 
     @Override
     public void subscribeOnUsersSounds(final IYouSoundPresenter presenter) {
-        final Query lastItems = mSoundDatabaseReference.orderByKey().limitToLast(mLastSofinds);
+        final Query lastItems = mSoundDatabaseReference.orderByKey().limitToLast(ConstantUtil.FIRST_PORTION_OF_ITEMS);
         if (mSoundChildEventListener == null) {
             mSoundChildEventListener = new ChildEventListener() {
                 @Override

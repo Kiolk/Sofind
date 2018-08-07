@@ -9,4 +9,5 @@
     <dimen name="BIG_PADDING">20dp</dimen>
     <dimen name="SOUND_ITEM_TEXT_SIZE">28sp</dimen>
     <dimen name="SMALL_TEXT_SIZE">12sp</dimen>
+    <dimen name="GENERAL_TEXT_COLOR">20sp</dimen>
 </resources>

@@ -7,4 +7,7 @@ public interface IProfilePresenter {
     void saveUser(UserModel user);
 
     void getUserInformation();
+
+    boolean confirmUserPassword(String password);
+
 }

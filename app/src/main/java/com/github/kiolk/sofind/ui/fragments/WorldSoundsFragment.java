@@ -2,6 +2,7 @@ package com.github.kiolk.sofind.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.github.kiolk.sofind.ui.fragments.base.BaseFragment;
 import com.github.kiolk.sofind.ui.fragments.yoursounds.IYouSoundPresenter;
 import com.github.kiolk.sofind.ui.fragments.yoursounds.IYouSoundView;
 import com.github.kiolk.sofind.ui.fragments.yoursounds.YouSoundPresenter;
+import com.github.kiolk.sofind.util.ConstantUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,12 +78,25 @@ public class WorldSoundsFragment extends BaseFragment implements IYouSoundView {
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(mAdapter);
         mPresenter.subscribeOnSounds();
+
     }
 
     @Override
     public void setUserSound(FullSofindModel userSofind) {
+        if(!mListSofinds.isEmpty() && mListSofinds.get(0).getCreateTime() < userSofind.getCreateTime()
+                && mListSofinds.size() > ConstantUtil.FIRST_PORTION_OF_ITEMS){
+            Snackbar.make(getView(), R.string.NEW_SOFIND, Snackbar.LENGTH_LONG).setAction(R.string.SEE_NEW_ITEM,
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            RecyclerView recyclerView = getView().findViewById(R.id.general_fragment_recycler_view);
+                            recyclerView.getLayoutManager().scrollToPosition(0);
+                        }
+                    }).show();
+        }
         mListSofinds.add(0, userSofind);
         mAdapter.notifyDataSetChanged();
+
     }
 
     @Override

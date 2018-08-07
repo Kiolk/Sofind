@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.github.kiolk.sofind.R;
 import com.github.kiolk.sofind.data.models.UserModel;
 import com.github.kiolk.sofind.ui.activities.SplashActivity;
+import com.github.kiolk.sofind.util.ConstantUtil;
 
 public class RegistrationActivity extends AppCompatActivity implements RegistrationView {
 
@@ -82,17 +83,17 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
                         }
                     case R.id.password_edit_text:
                         if (!isValidPassword(mPassword.getText().toString())) {
-                            mPassword.setError(getBaseContext().getResources().getString(R.string.SHORT_PASSWOR));
+                            mPassword.setError(getBaseContext().getResources().getString(R.string.SHORT_PASSWOR) + " " + ConstantUtil.MIN_NUMBER_IN_PASSWORD);
                         }
                         break;
                     case R.id.user_name_edit_text:
                         if (!isValidTextInput(mUserName.getText().toString())) {
-                            mUserName.setError(getBaseContext().getResources().getString(R.string.INPUT_MIN_TWO_SYMBOL));
+                            mUserName.setError(getBaseContext().getResources().getString(R.string.INPUT_MIN_TWO_SYMBOL) + " " + ConstantUtil.MIN_NUMBER_IN_NAME);
                         }
                         break;
                     case R.id.surname_edit_text:
                         if (!isValidTextInput(mUserSrname.getText().toString())) {
-                            mUserSrname.setError(getBaseContext().getResources().getString(R.string.INPUT_MIN_TWO_SYMBOL));
+                            mUserSrname.setError(getBaseContext().getResources().getString(R.string.INPUT_MIN_TWO_SYMBOL) +  " " + ConstantUtil.MIN_NUMBER_IN_NAME);
                         }
                         break;
                     case R.id.age_edit_text:
@@ -190,10 +191,6 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
         if (isUserMale == null) {
             mRadioGroup.setBackgroundColor(getBaseContext().getResources().getColor(R.color.colorAccent));
         }
-//        mPassword.setFocusableInTouchMode(true);
-//        mUserName.setFocusableInTouchMode(true);
-//        mUserName.setFocusableInTouchMode(true);
-//        mUserAge.setFocusableInTouchMode(true);
     }
 
     @Override
@@ -209,7 +206,7 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
     }
 
     private boolean isValidPassword(String password) {
-        return password.length() > MIN_NUMBER_OF_SYMBOLS;
+        return password.length() > ConstantUtil.MIN_NUMBER_IN_PASSWORD;
     }
 
     private boolean isEmailValid(String email) {
@@ -221,7 +218,7 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
             return false;
         }
         int userAge = Integer.parseInt(age);
-        return userAge < 120 && userAge > 0;
+        return userAge < ConstantUtil.MAX_OLD_VALUE && userAge > ConstantUtil.MIN_OLD_VALUE;
     }
 
     private boolean isValidTextInput(String text) {

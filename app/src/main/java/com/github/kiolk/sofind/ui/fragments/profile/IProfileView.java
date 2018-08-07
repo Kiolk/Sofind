@@ -9,4 +9,10 @@ public interface IProfileView {
     void setInformation(UserModel user);
 
     void successUpdate();
+
+    void showProgressBar(boolean isShow);
+
+    void showErrorMessage(int message);
+
+    boolean checkCorrectInputInfo();
 }

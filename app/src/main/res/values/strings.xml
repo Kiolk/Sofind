@@ -22,13 +22,22 @@
     <string name="LOG_IN">Log in</string>
     <string name="SAVE_NEW_USER">Save new user</string>
     <string name="NOT_CORRECT_INPUR_EMAIL">Not correct input email</string>
-    <string name="SHORT_PASSWOR">Password min 6 symbols</string>
+    <string name="SHORT_PASSWOR">Password must be has </string>
     <string name="INVALID_PASSWORD_OR_EMAIL">Invalid password or email</string>
     <string name="MISTEKE">Mistake</string>
-    <string name="INPUT_MIN_TWO_SYMBOL">Input min two leters</string>
+    <string name="INPUT_MIN_TWO_SYMBOL">Must be has </string>
     <string name="INPUT_CORRECT_AGE">Input correct age</string>
     <string name="MORE_SYMBOLS">Max number of caraters is</string>
     <string name="NEW_SOUND">Create new sound of mind</string>
+    <string name="NEW_SOFIND">New sofind item</string>
+    <string name="SEE_NEW_ITEM">See new item</string>
+    <string name="NEW_PASSWORD">New password</string>
+    <string name="CONFIRM_PASSWORD">Confirm password</string>
+    <string name="SAVE_PROFILE">Save profile</string>
+    <string name="SAVE_WITH_CONFIRM">Password for save profile updates</string>
+    <string name="INCORRECT_PASSWORD">Incorrect password</string>
+    <string name="CONFIRM_PASSWORD_NOT_EQUALS">Confirm password not equals</string>
+    <string name="NOT_COMPLITE_FORM">Not correct complete form</string>
 
     <string-array name="SETTING_ARRAY">
         <item>Change language</item>
