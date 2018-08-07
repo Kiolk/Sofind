@@ -33,8 +33,8 @@ public class YourSoundsFragment extends BaseFragment implements IYouSoundView {
 
         super.onCreate(savedInstanceState);
         mListSofinds = new ArrayList<>();
-        mAdapter = new SoundRecylerAdapter(getContext(), mListSofinds, mPresenter);
         mPresenter = new YouSoundPresenter(this);
+        mAdapter = new SoundRecylerAdapter(getContext(), mListSofinds, mPresenter);
     }
 
     @Nullable

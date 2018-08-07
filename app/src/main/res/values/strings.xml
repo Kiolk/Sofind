@@ -38,6 +38,9 @@
     <string name="INCORRECT_PASSWORD">Incorrect password</string>
     <string name="CONFIRM_PASSWORD_NOT_EQUALS">Confirm password not equals</string>
     <string name="NOT_COMPLITE_FORM">Not correct complete form</string>
+    <string name="ARE_YOU_WANT_LEAV">Are you whant leave aplication?</string>
+    <string name="YES">Yes</string>
+    <string name="NO">No</string>
 
     <string-array name="SETTING_ARRAY">
         <item>Change language</item>

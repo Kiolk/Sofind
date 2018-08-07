@@ -191,8 +191,8 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
     }
 
     @Override
-    public void updateNewSound(SofindModel sofind, final SimpleResultListener listener) {
-        mSoundDatabaseReference.child(sofind.getUserid() + sofind.getCreateTime())
+    public void updateNewSound(FullSofindModel sofind, final SimpleResultListener listener) {
+        mSoundDatabaseReference.child(sofind.getCreateTime() + "")
                 .setValue(sofind).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -305,7 +305,7 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
                 if (sofind.getCreateTime() == updatedSofind.getCreateTime()) {
                     int likes = sofind.getLikes();
                     updatedSofind.setLikes(likes + 1);
-                    mSoundDatabaseReference.child(updatedSofind.getUserid() + updatedSofind.getCreateTime()).setValue(updatedSofind);
+                    mSoundDatabaseReference.child(updatedSofind.getCreateTime() + "").setValue(updatedSofind);
                     single.removeEventListener(this);
                 }
             }

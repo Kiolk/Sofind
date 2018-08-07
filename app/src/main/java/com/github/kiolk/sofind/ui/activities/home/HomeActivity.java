@@ -27,6 +27,7 @@ import com.github.kiolk.sofind.providers.UserInfoProvider;
 import com.github.kiolk.sofind.ui.activities.SplashActivity;
 import com.github.kiolk.sofind.ui.activities.base.BaseActivity;
 import com.github.kiolk.sofind.ui.fragments.ConfigurationFragment;
+import com.github.kiolk.sofind.ui.fragments.LeaveMessage;
 import com.github.kiolk.sofind.ui.fragments.createsound.CreateSoundFragment;
 import com.github.kiolk.sofind.ui.fragments.profile.ProfileFragment;
 import com.github.kiolk.sofind.ui.fragments.WorldSoundsFragment;
@@ -43,6 +44,8 @@ public class HomeActivity extends BaseActivity implements HomeView{
     private HomePresenterImpl mPresenter;
     private ProfileFragment mEdProfileFragment = new ProfileFragment();
     private FloatingActionButton mAddNewSofind;
+    private  boolean isFirstLoad = true;
+    private boolean isRedyToLeave = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -131,7 +134,8 @@ public class HomeActivity extends BaseActivity implements HomeView{
         setSupportActionBar(toolbar);
         toolbar.setVisibility(View.VISIBLE);
         closeFragments();
-        showFragment(mYouSoundFragment);
+//        showFragment(mYouSoundFragment);
+//        showUserSounds();
     }
 
 
@@ -145,12 +149,7 @@ public class HomeActivity extends BaseActivity implements HomeView{
                 item.setChecked(true);
                 switch (item.getItemId()) {
                     case R.id.user_sounds_menu_item:
-                        mAddNewSofind.setVisibility(View.VISIBLE);
-                        Toast.makeText(getBaseContext(), "Selected user sounds", Toast.LENGTH_SHORT).show();
-                        showFragment(mYouSoundFragment);
-                        mYouSoundFragment.setUserFilter();
-                        mYouSoundFragment.showUserSounds();
-//
+                        showUserSounds();//
                         break;
                     case R.id.world_sounds_menu_item:
                         mAddNewSofind.setVisibility(View.VISIBLE);
@@ -181,6 +180,14 @@ public class HomeActivity extends BaseActivity implements HomeView{
                 return false;
             }
         });
+    }
+
+    private void showUserSounds() {
+        mAddNewSofind.setVisibility(View.VISIBLE);
+//        Toast.makeText(getBaseContext(), "Selected user sounds", Toast.LENGTH_SHORT).show();
+        showFragment(mYouSoundFragment);
+        mYouSoundFragment.setUserFilter();
+        mYouSoundFragment.showUserSounds();
     }
 
     private void closeFragments() {
@@ -219,9 +226,36 @@ public class HomeActivity extends BaseActivity implements HomeView{
     }
 
     @Override
+    public void onBackPressed() {
+        if(isRedyToLeave){
+            super.onBackPressed();
+        }else {
+            new LeaveMessage().show(getFragmentManager(), null);
+        }
+////        showUserSounds();
+//        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getBaseContext());
+//        alertBuilder.setTitle(R.string.ARE_YOU_WANT_LEAV).setPositiveButton(R.string.YES, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//               isRedyToLeave = true;
+//               onBackPressed();
+//            }
+//        }).setNegativeButton(R.string.NO, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                //
+//            }
+//        }).create().show();
+    }
+
+    @Override
     protected void onPostResume() {
         super.onPostResume();
         mPresenter.onResupe();
+        if(isFirstLoad){
+            showUserSounds();
+            isFirstLoad = false;
+        }
     }
 
     @Override

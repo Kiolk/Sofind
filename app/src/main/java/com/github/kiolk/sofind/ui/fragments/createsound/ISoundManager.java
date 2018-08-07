@@ -2,12 +2,13 @@ package com.github.kiolk.sofind.ui.fragments.createsound;
 
 import com.github.kiolk.sofind.data.ObjectResultListener;
 import com.github.kiolk.sofind.data.SimpleResultListener;
+import com.github.kiolk.sofind.data.models.FullSofindModel;
 import com.github.kiolk.sofind.data.models.SofindModel;
 import com.github.kiolk.sofind.ui.fragments.yoursounds.IYouSoundPresenter;
 
 public interface ISoundManager {
 
-    void updateNewSound(SofindModel sofind, SimpleResultListener listener);
+    void updateNewSound(FullSofindModel sofind, SimpleResultListener listener);
 
     void subscribeOnUsersSounds(IYouSoundPresenter presenter);
 
