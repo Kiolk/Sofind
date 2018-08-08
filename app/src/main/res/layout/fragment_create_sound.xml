@@ -3,8 +3,22 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/primaryTextColor"
+        android:padding="@dimen/STANDART_PADDING"
+        android:text="@string/EXAMLE"/>
     <include layout="@layout/card_single_sound"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/primaryTextColor"
+        android:padding="@dimen/STANDART_PADDING"
+        android:text="@string/INPUT_MESSAGE"/>
+
+    <include layout="@layout/card_input_text"/>
     <EditText
         android:id="@+id/new_sound_body_edit_text"
         android:minLines="5"

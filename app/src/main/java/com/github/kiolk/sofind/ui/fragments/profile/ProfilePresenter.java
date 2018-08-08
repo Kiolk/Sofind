@@ -4,6 +4,7 @@ import com.github.kiolk.sofind.data.ObjectResultListener;
 import com.github.kiolk.sofind.data.SimpleResultListener;
 import com.github.kiolk.sofind.data.managers.DataManager;
 import com.github.kiolk.sofind.data.models.UserModel;
+import com.github.kiolk.sofind.providers.UserInfoProvider;
 
 public class ProfilePresenter implements IProfilePresenter {
 
@@ -15,7 +16,7 @@ public class ProfilePresenter implements IProfilePresenter {
     }
 
     @Override
-    public void saveUser(UserModel user) {
+    public void saveUser(final UserModel user) {
         if(user.getPassword().equals("")){
             user.setPassword(mUserInformation.getPassword());
         }
@@ -24,6 +25,7 @@ public class ProfilePresenter implements IProfilePresenter {
             @Override
             public void onSuccess() {
                 mProfileView.successUpdate();
+                DataManager.getInstance().changeUserFullName(user.getUserId(), user.getUserName() + " " + user.getSurname());
             }
 
             @Override

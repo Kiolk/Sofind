@@ -11,6 +11,10 @@
     <color name="DARK_SECOND_BACKGROUND_COLOR">#494949</color>
     <color name="TITLE_COLOR">#f2f2c8</color>
     <color name="TRANSPARENT_COLOR">#00000000</color>
+    <color name="RED">#f50101</color>
+    <color name="GREEN">#09f501</color>
+    <color name="BLUE">#6d84fa</color>
+
 
 
 </resources>

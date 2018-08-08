@@ -13,7 +13,7 @@ public interface RegistrationModel {
 
     void removeStateListener();
 
-    void signOut();
+    void signOut(SimpleResultListener simpleResultListener);
 
     String getUserUid();
 

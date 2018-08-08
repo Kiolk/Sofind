@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -12,11 +13,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.kiolk.sofind.R;
@@ -72,11 +76,17 @@ public class HomeActivity extends BaseActivity implements HomeView{
        LayoutInflater inflater  = getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_new_sofind, null);
         final EditText userInput = view.findViewById(R.id.edit_text_dialog);
+//        userInput.setli
         AlertDialog.Builder sofindDialogBuilder = new AlertDialog.Builder(this);
         sofindDialogBuilder.setTitle(R.string.NEW_SOUND).setPositiveButton(R.string.SAVE, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 FullSofindModel sofindModel = new FullSofindModel();
+                String message = userInput.getText().toString();
+                if(message.length() > 100 || message.length() < 1 ){
+                    Toast.makeText(getBaseContext(), R.string.DESCRIPTION_MESSAGE_BODY, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 sofindModel.setMindMessage(userInput.getText().toString());
                 sofindModel.setCreateTime(System.currentTimeMillis());
                 sofindModel.setUserid(UserInfoProvider.getUserId(getBaseContext()));
@@ -121,7 +131,6 @@ public class HomeActivity extends BaseActivity implements HomeView{
                 break;
             case R.id.profile_menu_item:
                 mEdProfileFragment.saveEditProfile();
-//                Toast.makeText(getBaseContext(), "Selected save", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
@@ -131,6 +140,8 @@ public class HomeActivity extends BaseActivity implements HomeView{
 
     private void setupToolBar() {
         Toolbar toolbar = findViewById(R.id.main_tool_bar);
+//        Toolbar.LayoutParams params = (Toolbar.LayoutParams) toolbar.getLayoutParams();
+//        params.layoutS
         setSupportActionBar(toolbar);
         toolbar.setVisibility(View.VISIBLE);
         closeFragments();
@@ -141,11 +152,17 @@ public class HomeActivity extends BaseActivity implements HomeView{
 
     private void setupNavigationView() {
         NavigationView navigationView = findViewById(R.id.menu_navigation_view);
+        reloadDrawerLayout();
+//        TextView drawerTitle = navigationView.getHeaderView(0).findViewById(R.id.user_name_header_text_view);
+//        drawerTitle.setText(UserInfoProvider.getUserNameSurname(getBaseContext()));
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                closeFragments();
                 closeDrawerLayout();
+                if(item.isChecked()){
+                    return false;
+                }
+                closeFragments();
                 item.setChecked(true);
                 switch (item.getItemId()) {
                     case R.id.user_sounds_menu_item:
@@ -163,6 +180,11 @@ public class HomeActivity extends BaseActivity implements HomeView{
                         Toast.makeText(getBaseContext(), "Selected create user sound", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.edit_profile_menu_item:
+                        AppBarLayout appBar = findViewById(R.id.general_app_bar_layout);
+                        appBar.setExpanded(true);
+
+                        FrameLayout frame = findViewById(R.id.fragments_container);
+//                        frame.setBe
                         showFragment(mEdProfileFragment);
                         mEdProfileFragment.prepareInformation();
                         Toast.makeText(getBaseContext(), "Selected edit profile", Toast.LENGTH_SHORT).show();
@@ -220,15 +242,25 @@ public class HomeActivity extends BaseActivity implements HomeView{
 
     @Override
     public void singOut() {
-        Intent intent = new Intent(this, SplashActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, SplashActivity.class);
+//        startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void reloadDrawerLayout() {
+        NavigationView navigationView = findViewById(R.id.menu_navigation_view);
+        TextView drawerTitle = navigationView.getHeaderView(0).findViewById(R.id.user_name_header_text_view);
+        drawerTitle.setText(UserInfoProvider.getUserNameSurname(getBaseContext()));
     }
 
     @Override
     public void onBackPressed() {
         if(isRedyToLeave){
-            super.onBackPressed();
+//            super.onBackPressed();
+//            Intent intent = new Intent(this, SplashActivity.class);
+//            startActivity(intent);
+            finish();
         }else {
             new LeaveMessage().show(getFragmentManager(), null);
         }

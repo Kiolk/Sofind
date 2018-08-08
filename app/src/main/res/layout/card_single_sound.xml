@@ -1,74 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/STANDART_PADDING">
+    android:layout_margin="@dimen/STANDART_PADDING"
+    android:orientation="vertical">
 
-   <RelativeLayout
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:background="?attr/backgroundColor">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/backgroundColor">
 
-       <TextView
-           android:id="@+id/user_name_text_view"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:textColor="?attr/primaryTextColor"
-           android:padding="@dimen/STANDART_PADDING"
-           tools:text="Vasys Pupkin"/>
+        <TextView
+            android:id="@+id/user_name_text_view"
+            android:layout_width="wrap_content"
+            android:fontFamily="?attr/primaryTextFont"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/STANDART_PADDING"
+            android:textColor="?attr/primaryTextColor"
+            tools:text="Vasys Pupkin" />
 
 
-       <TextView
-           android:id="@+id/sound_body_text_view"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_below="@+id/user_name_text_view"
-           android:padding="@dimen/STANDART_PADDING"
-           android:gravity="center_horizontal"
-           android:fontFamily="@font/bicubik"
-           android:textColor="?attr/primaryTextColor"
-           android:layout_alignParentLeft="true"
-           android:layout_alignParentRight="true"
-           android:textSize="@dimen/SOUND_ITEM_TEXT_SIZE"
-           tools:text="'Per as persa ad aster'"/>/>
+        <TextView
+            android:id="@+id/sound_body_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/user_name_text_view"
+            android:fontFamily="@font/bicubik"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/STANDART_PADDING"
+            android:textColor="?attr/primaryTextColor"
+            android:textSize="@dimen/SOUND_ITEM_TEXT_SIZE"
+            tools:text="'Per as persa ad aster'" />
 
-       <TextView
-           android:layout_below="@+id/sound_body_text_view"
-           android:id="@+id/date_create_text_view"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignTop="@id/like_image_image_view"
-           android:gravity="center"
-           android:textSize="@dimen/SMALL_TEXT_SIZE"
-           android:textColor="?attr/primaryTextColor"
-           android:layout_alignBottom="@+id/like_image_image_view"
-           android:layout_alignParentRight="true"
-           tools:text="25 may 2018"/>/>
+        <TextView
+            android:id="@+id/date_create_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/like_image_image_view"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/like_image_image_view"
+            android:layout_below="@+id/sound_body_text_view"
+            android:gravity="bottom"
+            android:textColor="?attr/primaryTextColor"
+            android:paddingRight="@dimen/STANDART_PADDING"
+            android:paddingBottom="@dimen/STANDART_PADDING"
+            android:textSize="@dimen/SMALL_TEXT_SIZE"
+            tools:text="25 may 2018"
+            android:paddingEnd="@dimen/STANDART_PADDING" />
 
-       <ImageView
-           android:id="@+id/like_image_image_view"
-           android:layout_below="@id/sound_body_text_view"
-           android:layout_width="@dimen/SMALL_ICON_SIZE"
-           android:layout_height="@dimen/SMALL_ICON_SIZE"
-           android:padding="@dimen/STANDART_PADDING"
-           android:src="@drawable/ic_like_light"/>
+        <ImageView
+            android:id="@+id/like_image_image_view"
+            android:layout_width="@dimen/SMALL_ICON_SIZE"
+            android:layout_height="@dimen/SMALL_ICON_SIZE"
+            android:layout_below="@id/sound_body_text_view"
+            android:contentDescription="@string/YOUR_AGE"
+            android:padding="@dimen/STANDART_PADDING"
+            android:src="@drawable/ic_like_light" />
 
-       <TextView
-           android:id="@+id/number_of_likes_text_view"
-           android:layout_width="wrap_content"
-           android:gravity="center"
-           android:textSize="@dimen/NORMAL_TEXT_SIZE"
-           android:textColor="?attr/primaryTextColor"
-           android:padding="@dimen/STANDART_PADDING"
-           android:layout_height="wrap_content"
-           android:layout_toRightOf="@id/like_image_image_view"
-           android:layout_alignTop="@id/like_image_image_view"
-           android:layout_alignBottom="@+id/like_image_image_view"
-           android:text="3"/>
+        <TextView
+            android:id="@+id/number_of_likes_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/like_image_image_view"
+            android:layout_alignTop="@id/like_image_image_view"
+            android:layout_toEndOf="@id/like_image_image_view"
+            android:layout_toRightOf="@id/like_image_image_view"
+            android:gravity="center"
+            android:padding="@dimen/STANDART_PADDING"
+            android:text="@string/TEST_NUMBER"
+            android:textColor="?attr/primaryTextColor"
+            android:textSize="@dimen/NORMAL_TEXT_SIZE" />
 
-   </RelativeLayout>
+    </RelativeLayout>
 
 
 </android.support.v7.widget.CardView>

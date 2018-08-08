@@ -11,7 +11,6 @@ import com.github.kiolk.sofind.data.models.UserModel;
 import com.github.kiolk.sofind.ui.activities.registration.RegistrationModel;
 import com.github.kiolk.sofind.ui.fragments.createsound.ISoundManager;
 import com.github.kiolk.sofind.ui.fragments.yoursounds.IYouSoundPresenter;
-import com.github.kiolk.sofind.ui.fragments.yoursounds.YouSoundPresenter;
 import com.github.kiolk.sofind.util.ConstantUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,7 +23,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -116,8 +114,9 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
     }
 
     @Override
-    public void signOut() {
+    public void signOut(SimpleResultListener simpleResultListener) {
         FirebaseAuth.getInstance().signOut();
+        simpleResultListener.onSuccess();
     }
 
     @Override
@@ -374,40 +373,9 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
             };
         }
         mSoundDatabaseReference.orderByKey().limitToLast(getSofinds).addChildEventListener(mUpdateChildListener);
-//        mSoundDatabaseReference.orderByKey().limitToLast(getSofinds).addChildEventListener(new ChildEventListener() {
-//            long lastUpdated = 0L;
-//
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                FullSofindModel sofind = dataSnapshot.getValue(FullSofindModel.class);
-//                if (lastUpdated == 0) {
-//                    lastUpdated = sofind.getCreateTime();
-//                }
-//                if (lastUpdated >= sofind.getCreateTime()) {
-//                    presenter.updateAditionalItems(sofind);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
+    }
+
+    public void changeUserFullName(String userId, String fulUserName){
+        mUsers.put(userId, fulUserName);
     }
 }

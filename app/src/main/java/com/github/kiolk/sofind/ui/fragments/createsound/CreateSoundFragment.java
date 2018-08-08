@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.github.kiolk.sofind.R;
 import com.github.kiolk.sofind.data.models.SofindModel;
 import com.github.kiolk.sofind.ui.fragments.base.BaseFragment;
+import com.github.kiolk.sofind.util.ConverterUtil;
 
 
 public class CreateSoundFragment extends BaseFragment implements ICreateSoundView {
@@ -90,7 +91,7 @@ public class CreateSoundFragment extends BaseFragment implements ICreateSoundVie
     @Override
     public void updateExample(SofindModel sofind, String userName) {
         mUserName.setText(userName);
-        mDate.setText(sofind.getCreateTime() + " ");
+        mDate.setText(ConverterUtil.convertEpochTime(getContext(), sofind.getCreateTime(), ConverterUtil.DAY_PATTERN));
         mSoundBody.setText(sofind.getMindMessage());
     }
 

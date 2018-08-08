@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,13 +70,78 @@ public class ConfigurationFragment extends BaseFragment {
 
     private void showSelectAccentColor() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-        dialog.setTitle(R.string.SELECT_ACCENT_COLOR).setPositiveButton(R.string.APPLY_CHANGES, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                HomeActivity home = (HomeActivity) getActivity();
-                home.restart();
+        LayoutInflater inflater = getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_accent_color, null);
+        final String[] accentColor = {ThemeProvider.getAccentColor(getContext())};
+        final FloatingActionButton redButton = view.findViewById(R.id.red_fab);
+        final FloatingActionButton blueButton = view.findViewById(R.id.blue_fab);
+        final FloatingActionButton greenButton = view.findViewById(R.id.green_fab);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            switch (accentColor[0]) {
+                case ThemeProvider.RED_ACCENT:
+                    redButton.setElevation(5.0f);
+                    break;
+                case ThemeProvider.BLUE_ACCENT:
+
+                    blueButton.setElevation(5.0f);
+                    break;
+                case ThemeProvider.GREEN_ACCENT:
+                    greenButton.setElevation(5.0f);
+                    break;
             }
-        }).create().show();
+        }
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deselectElevationButton();
+                switch (v.getId()) {
+                    case R.id.red_fab:
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            redButton.setElevation(5.0f);
+                        }
+                        accentColor[0] = ThemeProvider.RED_ACCENT;
+                        break;
+                    case R.id.blue_fab:
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            blueButton.setElevation(5.0f);
+                        }
+                        accentColor[0] = ThemeProvider.BLUE_ACCENT;
+                        break;
+                    case R.id.green_fab:
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            greenButton.setElevation(5.0f);
+                        }
+                        accentColor[0] = ThemeProvider.GREEN_ACCENT;
+                        break;
+                }
+            }
+
+            private void deselectElevationButton() {
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    blueButton.setElevation(1.0f);
+                    redButton.setElevation(1.0f);
+                    greenButton.setElevation(1.0f);
+                }
+            }
+        };
+        redButton.setOnClickListener(listener);
+        greenButton.setOnClickListener(listener);
+        blueButton.setOnClickListener(listener);
+        dialog.setTitle(R.string.SELECT_ACCENT_COLOR)
+                .setView(view)
+                .setPositiveButton(R.string.APPLY_CHANGES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ThemeProvider.setAccentColor(getContext(), accentColor[0]);
+                        HomeActivity home = (HomeActivity) getActivity();
+                        home.restart();
+                    }
+                })
+                .create()
+                .show();
     }
 
     private void showSelectLanguageDialog() {

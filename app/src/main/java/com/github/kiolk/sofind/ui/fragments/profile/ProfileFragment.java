@@ -12,10 +12,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.kiolk.sofind.R;
 import com.github.kiolk.sofind.data.models.UserModel;
+import com.github.kiolk.sofind.providers.UserInfoProvider;
+import com.github.kiolk.sofind.ui.activities.home.HomeActivity;
 import com.github.kiolk.sofind.ui.fragments.base.BaseFragment;
 import com.github.kiolk.sofind.util.ConstantUtil;
 
@@ -30,6 +33,7 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
     private EditText mUserAge;
     private EditText mFirstPassword;
     private EditText mSecondPAssword;
+    private TextView mUserEmail;
     private RadioButton mIsMale;
     private RadioButton mIsFemale;
     private Button mSaVeButton;
@@ -52,6 +56,7 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
         mUserSurname = view.findViewById(R.id.user_surname_edit_profile);
         mUserAge = view.findViewById(R.id.age_edit_profile);
         mUserSex = view.findViewById(R.id.sex_edit_profile_radio_group);
+        mUserEmail = view.findViewById(R.id.user_email_text_view);
         mIsFemale = view.findViewById(R.id.female_edit_profile_radio_button);
         mIsMale = view.findViewById(R.id.male_edit_profile_radio_button);
         mFirstPassword = view.findViewById(R.id.first_password_edit_profile);
@@ -70,7 +75,12 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
 
     @Override
     public void saveEditProfile() {
-        mPresenter.saveUser(null);
+//        mPresenter.saveUser(null);
+        if (checkCorrectInputInfo()) {
+            setupConfirmPasswordDialog();
+        } else {
+            showErrorMessage(NOT_CORRECT_COMPLET_FORM);
+        }
     }
 
     public void prepareInformation() {
@@ -81,7 +91,8 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
     public void setInformation(UserModel user) {
         mUserName.setText(user.getUserName());
         mUserSurname.setText(user.getSurname());
-        mUserAge.setText(user.getAge() + "");
+        mUserEmail.setText(user.getEmail());
+        mUserAge.setText(String.valueOf(user.getAge()));
         if (user.isMale()) {
             mIsMale.setChecked(true);
         } else {
@@ -90,19 +101,20 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
         mSaVeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkCorrectInputInfo()){
+                if (checkCorrectInputInfo()) {
                     setupConfirmPasswordDialog();
-                }else {
+                } else {
                     showErrorMessage(NOT_CORRECT_COMPLET_FORM);
                 }
             }
         });
     }
 
-    private void setupConfirmPasswordDialog() {
+    @Override
+    public void setupConfirmPasswordDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
-        View confirmView = inflater.inflate(R.layout.dialog_new_sofind, null);
+        View confirmView = inflater.inflate(R.layout.dialog_confirm_password, null);
         final EditText mUserConfirmPassword = confirmView.findViewById(R.id.edit_text_dialog);
         builder.setTitle(R.string.SAVE_WITH_CONFIRM).setView(confirmView)
                 .setPositiveButton(R.string.SAVE, new DialogInterface.OnClickListener() {
@@ -130,6 +142,10 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
     @Override
     public void successUpdate() {
         Toast.makeText(getContext(), "Success save information", Toast.LENGTH_SHORT).show();
+        UserInfoProvider.saveUserName(getContext(), mUserName.getText().toString(), mUserSurname.getText().toString());
+        HomeActivity activity = (HomeActivity) getActivity();
+        activity.reloadDrawerLayout();
+//        activity.restart();
     }
 
     @Override
@@ -149,25 +165,25 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
     @Override
     public boolean checkCorrectInputInfo() {
         boolean isCorrect = true;
-        if(mUserName.getText().toString().length() < ConstantUtil.MIN_NUMBER_IN_NAME){
+        if (mUserName.getText().toString().length() < ConstantUtil.MIN_NUMBER_IN_NAME) {
             mUserName.setError(getResources().getString(R.string.INPUT_MIN_TWO_SYMBOL) + " " + ConstantUtil.MIN_NUMBER_IN_NAME);
             isCorrect = false;
         }
-        if(mUserSurname.getText().toString().length() < ConstantUtil.MIN_NUMBER_IN_NAME){
+        if (mUserSurname.getText().toString().length() < ConstantUtil.MIN_NUMBER_IN_NAME) {
             mUserSurname.setError(getResources().getString(R.string.INPUT_MIN_TWO_SYMBOL) + " " + ConstantUtil.MIN_NUMBER_IN_NAME);
             isCorrect = false;
         }
         int age = Integer.parseInt(mUserAge.getText().toString());
-        if(age > ConstantUtil.MAX_OLD_VALUE || age < ConstantUtil.MIN_OLD_VALUE){
+        if (age > ConstantUtil.MAX_OLD_VALUE || age < ConstantUtil.MIN_OLD_VALUE) {
             mUserAge.setError(getResources().getString(R.string.INPUT_CORRECT_AGE));
             isCorrect = false;
         }
 
-        if(!mSecondPAssword.getText().toString().equals(mFirstPassword.getText().toString())){
+        if (!mSecondPAssword.getText().toString().equals(mFirstPassword.getText().toString())) {
             mSecondPAssword.setError(getResources().getString(R.string.CONFIRM_PASSWORD_NOT_EQUALS));
             isCorrect = false;
         }
-        if(!mFirstPassword.getText().toString().equals("") && mFirstPassword.getText().toString().length() < ConstantUtil.MIN_NUMBER_IN_PASSWORD){
+        if (!mFirstPassword.getText().toString().equals("") && mFirstPassword.getText().toString().length() < ConstantUtil.MIN_NUMBER_IN_PASSWORD) {
             mFirstPassword.setError(getResources().getString(R.string.SHORT_PASSWOR) + " " + ConstantUtil.MIN_NUMBER_IN_PASSWORD);
             isCorrect = false;
         }

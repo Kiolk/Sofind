@@ -11,4 +11,7 @@
     <dimen name="SMALL_TEXT_SIZE">12sp</dimen>
     <dimen name="GENERAL_TEXT_COLOR">20sp</dimen>
     <dimen name="BIG_ICON_SIZE">100dp</dimen>
+    <dimen name="ENABLE_BUTTON_ELEVATION">1dp</dimen>
+    <dimen name="BIG_TEXT_SIZE">36sp</dimen>
+    <dimen name="BIG_HEADER_HEIGHT">220dp</dimen>
 </resources>

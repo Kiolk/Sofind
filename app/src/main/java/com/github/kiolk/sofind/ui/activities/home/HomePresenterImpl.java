@@ -33,6 +33,17 @@ public class HomePresenterImpl implements HomePresenter {
 
     @Override
     public void singOut() {
-        DataManager.getInstance().signOut();
+        DataManager.getInstance().signOut(new SimpleResultListener(){
+
+            @Override
+            public void onSuccess() {
+                mHomeView.singOut();
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
     }
 }

@@ -16,6 +16,7 @@
             android:layout_height="match_parent">
 
             <android.support.design.widget.AppBarLayout
+                android:id="@+id/general_app_bar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:expanded="true">
@@ -24,7 +25,7 @@
                     android:id="@+id/main_tool_bar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:layout_scrollFlags="enterAlways"
                     app:navigationIcon="@drawable/ic_menu"
                     android:visibility="gone"
                     app:title="@string/YOUR_SOUNDS"
@@ -50,7 +51,7 @@
                 android:layout_margin="@dimen/STANDART_PADDING"
                 app:fabSize="normal"
                 android:visibility="gone"
-                app:backgroundTint="@color/DARK_BACKGROUND_COLOR"
+                app:backgroundTint="?attr/colorAccent"
                 android:src="@drawable/ic_speaking"
                 android:layout_gravity="right|bottom"/>
 
@@ -66,7 +67,7 @@
         android:layout_gravity="start"
         android:background="?attr/backgroundColor"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/drawer_main_layout"
+        app:headerLayout="@layout/header_menu_title"
         app:itemIconTint="?attr/menuTextColor"
         app:itemTextColor="?attr/menuTextColor"
         app:menu="@menu/menu_main">

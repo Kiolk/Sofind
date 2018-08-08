@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/BIG_HEADER_HEIGHT"
+    xmlns:tool="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/header_image"
+        android:contentDescription="@string/HEADER_IMAGE"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/HEADER_HEIGHT"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_speaking_header"/>
+
+    <TextView
+        android:layout_below="@+id/header_image"
+        android:id="@+id/user_name_header_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/primaryTextColor"
+        tools:text="Vasya"
+        android:maxLength="@integer/NAME_LENGTH"
+        android:layout_alignParentBottom="true"
+        android:fontFamily="@font/qoly"
+        android:paddingStart="@dimen/BIG_PADDING"
+        android:gravity="center"
+        android:textSize="@dimen/BIG_TEXT_SIZE"
+        android:paddingLeft="@dimen/BIG_PADDING"
+        />
+
+</RelativeLayout>

@@ -4,4 +4,5 @@ public interface HomeView {
 
     void singOut();
 
+    void reloadDrawerLayout();
 }

@@ -8,6 +8,8 @@ public interface IProfileView {
 
     void setInformation(UserModel user);
 
+    void setupConfirmPasswordDialog();
+
     void successUpdate();
 
     void showProgressBar(boolean isShow);

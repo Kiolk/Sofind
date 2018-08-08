@@ -1,35 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <ProgressBar
         android:id="@+id/profile_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="invisible"/>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="@dimen/STANDART_PADDING">
+        android:visibility="invisible" />
 
-    <TextView
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/YOUR_NAME"
-        android:layout_weight="4"
-        style="@style/EditProfileTitleStyle" />
+        android:orientation="horizontal"
+        android:padding="@dimen/STANDART_PADDING">
 
-    <EditText
-        android:id="@+id/user_name_edit_profile"
-        android:layout_width="0dp"
-        android:layout_weight="7"
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/EMAIL"
+            android:layout_weight="4"
+            style="@style/EditProfileTitleStyle" />
+
+        <TextView
+            android:id="@+id/user_email_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/EMAIL"
+            android:layout_weight="7"
+            style="@style/EditProfileTitleStyle" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/EditProfileInputStyle" />
+        android:orientation="horizontal"
+        android:padding="@dimen/STANDART_PADDING">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/YOUR_NAME"
+            android:layout_weight="4"
+            style="@style/EditProfileTitleStyle" />
+
+        <EditText
+            android:id="@+id/user_name_edit_profile"
+            android:layout_width="0dp"
+            android:layout_weight="7"
+            android:layout_height="wrap_content"
+            style="@style/EditProfileInputStyle" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -91,6 +118,7 @@
             android:id="@+id/male_edit_profile_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="?attr/primaryTextColor"
             android:layout_gravity="center_horizontal"
             android:paddingRight="@dimen/BIG_PADDING"
             android:text="@string/MALE" />
@@ -100,10 +128,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:textColor="?attr/primaryTextColor"
             android:paddingRight="@dimen/BIG_PADDING"
             android:text="@string/FEMALE" />
 
     </RadioGroup>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -126,6 +156,7 @@
             style="@style/EditProfileInputStyle" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -148,13 +179,15 @@
             style="@style/EditProfileInputStyle" />
 
     </LinearLayout>
+
     <Button
         android:id="@+id/save_profile_button"
         android:layout_width="wrap_content"
         android:layout_gravity="center"
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/NORMAL_TEXT_SIZE"
+        android:visibility="invisible"
         android:text="@string/SAVE_PROFILE"
         android:layout_height="wrap_content"
-        android:enabled="true"/>
+        android:enabled="true" />
 </LinearLayout>

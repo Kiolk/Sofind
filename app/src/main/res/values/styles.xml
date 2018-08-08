@@ -10,6 +10,7 @@
 
     <declare-styleable name="AppTheme">
         <attr name="primaryTextColor" format="color"/>
+        <attr name="primaryTextFont" format="reference"/>
         <attr name="backgroundColor" format="color"/>
         <attr name="secondBackgroundColor" format="color"/>
         <attr name="menuTextColor" format="integer"/>
@@ -23,7 +24,7 @@
     </declare-styleable>
 
     <style name="MyTheme" parent="AppTheme">
-
+        <item name="primaryTextFont">@font/forum</item>
     </style>
 
     <style name="Light" parent="MyTheme">
@@ -40,10 +41,36 @@
         <item name="primaryTextColor">@color/LIGHT_GRAY_TEXT_COLOR</item>
     </style>
 
+    <style name="RedDark" parent="Dark">
+        <item name="colorAccent">@color/RED</item>
+    </style>
+
+    <style name="RedLight" parent="Light">
+        <item name="colorAccent">@color/RED</item>
+    </style>
+
+    <style name="BlueDark" parent="Dark">
+        <item name="colorAccent">@color/BLUE</item>
+    </style>
+
+    <style name="BlueLight" parent="Light">
+        <item name="colorAccent">@color/BLUE</item>
+    </style>
+
+    <style name="GreenDark" parent="Dark">
+        <item name="colorAccent">@color/GREEN</item>
+    </style>
+
+    <style name="GreenLight" parent="Light">
+        <item name="colorAccent">@color/GREEN</item>
+    </style>
+
     <style name="EditBlockStyle">
         <item name="android:theme">?attr/primaryTextColor</item>
         <item name="android:paddingLeft">@dimen/BIG_PADDING</item>
         <item name="android:layout_marginLeft">@dimen/BIG_PADDING</item>
+        <item name="android:textColor">?attr/primaryTextColor</item>
+        <item name="android:textColorHint">?attr/primaryTextColor</item>
         <item name="android:layout_marginRight">@dimen/BIG_PADDING</item>
         <item name="android:paddingRight">@dimen/BIG_PADDING</item>
     </style>
@@ -58,6 +85,13 @@
 
     <style name="EditProfileInputStyle">
         <item name="android:layout_weight">7</item>
+        <item name="android:textColor">?attr/primaryTextColor</item>
+    </style>
+
+    <style name="FloatButtonDialogStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/BIG_PADDING</item>
     </style>
 
 </resources>

@@ -45,6 +45,12 @@
     <string name="APPLY_CHANGES">Apply changes</string>
     <string name="CHOSE_LANGUAGE">Chose language</string>
     <string name="SELECT_ACCENT_COLOR">Select accent color</string>
+    <string name="HEADER_IMAGE">Header image</string>
+    <string name="YOUR_CURRENT_PASSWORD">You current password</string>
+    <string name="YOUR_SOUND">Type your sound</string>
+    <string name="DESCRIPTION_MESSAGE_BODY">Your message can not less than 1 and more 100 charachters</string>
+    <string name="INPUT_MESSAGE">Input your message:</string>
+    <string name="TEST_NUMBER">3</string>
 
     <string-array name="SETTING_ARRAY">
         <item>Change language</item>

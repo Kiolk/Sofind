@@ -8,9 +8,13 @@ import com.github.kiolk.sofind.R;
 public class ThemeProvider {
 
     private static final String THEME = "Theme";
-    private static final String ACCENT_COLOR = "Theme";
+    private static final String ACCENT_COLOR = "Accent";
     public static final String DAY_MODE = "day";
     public static final String NIGHT_MODE = "night";
+    public static final String RED_ACCENT= "red";
+    public static final String GREEN_ACCENT = "green";
+    public static final String BLUE_ACCENT= "blue";
+
 
 
     public static void applyTheme(Activity activity) {
@@ -23,23 +27,32 @@ public class ThemeProvider {
     private static int getTheme(String theme, String accaentColor) {
         int selectedTheme = 0;
         switch (theme) {
-            case "day":
+            case DAY_MODE:
                 switch (accaentColor) {
-                    case "red":
+                    case RED_ACCENT:
+                        selectedTheme = R.style.RedLight;
                         break;
-                    case "blue":
+                    case BLUE_ACCENT:
+                        selectedTheme = R.style.BlueLight;
+                        break;
+                        case GREEN_ACCENT:
+                            selectedTheme = R.style.GreenLight;
                         break;
                     default:
                         selectedTheme = R.style.Light;
                         break;
                 }
-//                selectedTheme = R.style.Light;
                 break;
-            case "night":
+            case NIGHT_MODE:
                 switch (accaentColor) {
-                    case "red":
+                    case RED_ACCENT:
+                        selectedTheme = R.style.RedDark;
                         break;
-                    case "blue":
+                    case BLUE_ACCENT:
+                        selectedTheme = R.style.BlueDark;
+                        break;
+                        case GREEN_ACCENT:
+                            selectedTheme = R.style.GreenDark;
                         break;
                     default:
                         selectedTheme = R.style.Dark;
@@ -60,6 +73,14 @@ public class ThemeProvider {
 
     public static void setThemeMode(Context context, String modType) {
         PrefSetter.putString(context, THEME, modType);
+    }
+
+    public static String getAccentColor(Context context) {
+        return PrefGetter.getString(context, ACCENT_COLOR);
+    }
+
+    public static void setAccentColor(Context context, String color){
+        PrefSetter.putString(context, ACCENT_COLOR, color);
     }
 }
 
