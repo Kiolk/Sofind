@@ -1,39 +1,42 @@
 package com.github.kiolk.sofind.ui.activities.home;
 
-import com.github.kiolk.sofind.data.SimpleResultListener;
+import com.github.kiolk.sofind.data.listeners.SimpleResultListener;
 import com.github.kiolk.sofind.data.managers.DataManager;
 
+/**
+ * RegistrationPresenter implementation for HomeView
+ */
 public class HomePresenterImpl implements HomePresenter {
 
-    private HomeView mHomeView;
+    private final HomeView mHomeView;
 
-    protected HomePresenterImpl(HomeView view){
+    HomePresenterImpl(final HomeView view) {
         mHomeView = view;
     }
 
-    @Override
-    public void onResupe() {
-        DataManager.getInstance().addStateListener(new SimpleResultListener() {
-            @Override
-            public void onSuccess() {
-                mHomeView.singOut();
-            }
-
-            @Override
-            public void onError(String message) {
-
-            }
-        });
-    }
-
-    @Override
-    public void onPause() {
-        DataManager.getInstance().removeStateListener();
-    }
+//    @Override
+//    public void onResupe() {
+//        DataManager.getInstance().addStateListener(new SimpleResultListener() {
+//            @Override
+//            public void onSuccess() {
+//                mHomeView.singOut();
+//            }
+//
+//            @Override
+//            public void onError(String message) {
+//
+//            }
+//        });
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        DataManager.getInstance().removeStateListener();
+//    }
 
     @Override
     public void singOut() {
-        DataManager.getInstance().signOut(new SimpleResultListener(){
+        DataManager.getInstance().signOut(new SimpleResultListener() {
 
             @Override
             public void onSuccess() {
@@ -41,7 +44,7 @@ public class HomePresenterImpl implements HomePresenter {
             }
 
             @Override
-            public void onError(String message) {
+            public void onError() {
 
             }
         });

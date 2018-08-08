@@ -1,22 +1,26 @@
 package com.github.kiolk.sofind.ui.activities.registration;
 
-import com.github.kiolk.sofind.data.SimpleResultListener;
+import com.github.kiolk.sofind.data.listeners.SimpleResultListener;
 import com.github.kiolk.sofind.data.managers.DataManager;
 import com.github.kiolk.sofind.data.models.UserModel;
 
-public class PresenterImpl implements Presenter {
+/**
+ * Implementation of presenter for registration process
+ */
+public class RegistrationPresenterImpl implements RegistrationPresenter {
 
-    private RegistrationView mRegistrationView;
+    private final RegistrationView mRegistrationView;
 
-    PresenterImpl(RegistrationView view){
+    RegistrationPresenterImpl(final RegistrationView view) {
         mRegistrationView = view;
     }
 
     @Override
-    public void singIn(String email, String password) {
+    public void singIn(final String email, final String password) {
         mRegistrationView.showProgressBar(true);
-        if(mRegistrationView.isValidEmailAndPassword()){
+        if (mRegistrationView.isValidEmailAndPassword()) {
             DataManager.getInstance().userLogin(email, password, new SimpleResultListener() {
+
                 @Override
                 public void onSuccess() {
                     mRegistrationView.showProgressBar(false);
@@ -24,12 +28,12 @@ public class PresenterImpl implements Presenter {
                 }
 
                 @Override
-                public void onError(String message) {
+                public void onError() {
                     mRegistrationView.showProgressBar(false);
                     mRegistrationView.error(1);
                 }
             });
-        }else{
+        } else {
             mRegistrationView.showMistake();
             mRegistrationView.error(RegistrationView.INVALID_PASSWORD_OR_EMAIL);
             mRegistrationView.showProgressBar(false);
@@ -38,14 +42,16 @@ public class PresenterImpl implements Presenter {
     }
 
     @Override
-    public void registerNewUser(String email, String password) {
-        if(mRegistrationView.isValidRegistrationForm()){
+    public void registerNewUser(final String email, final String password) {
+        if (mRegistrationView.isValidRegistrationForm()) {
             DataManager.getInstance().registerNewUser(email, password, new SimpleResultListener() {
+
                 @Override
                 public void onSuccess() {
-                    UserModel user = mRegistrationView.getNewUserInformation();
+                    final UserModel user = mRegistrationView.getNewUserInformation();
                     user.setUserId(DataManager.getInstance().getUserUid());
-                    DataManager.getInstance().saveNewUser(user, new SimpleResultListener(){
+                    DataManager.getInstance().saveNewUser(user, new SimpleResultListener() {
+
                         @Override
                         public void onSuccess() {
                             mRegistrationView.showProgressBar(false);
@@ -53,7 +59,7 @@ public class PresenterImpl implements Presenter {
                         }
 
                         @Override
-                        public void onError(String message) {
+                        public void onError() {
                             mRegistrationView.showProgressBar(false);
                             mRegistrationView.error(1);
                         }
@@ -61,14 +67,14 @@ public class PresenterImpl implements Presenter {
                 }
 
                 @Override
-                public void onError(String message) {
+                public void onError() {
                     mRegistrationView.showProgressBar(false);
                     mRegistrationView.error(1);
                 }
             });
-        }else{
+        } else {
             mRegistrationView.showMistake();
-            mRegistrationView.error(RegistrationView.NOT_CORRECT_COMPLET_FORM);
+            mRegistrationView.error(RegistrationView.NOT_CORRECT_COMPLETE_FORM);
             mRegistrationView.showProgressBar(false);
         }
     }

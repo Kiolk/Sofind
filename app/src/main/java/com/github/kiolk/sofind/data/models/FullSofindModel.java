@@ -4,12 +4,12 @@ public class FullSofindModel extends SofindModel {
 
     private String mUserFullName;
 
-    public FullSofindModel(){
+    public FullSofindModel() {
 
     }
 
-    public FullSofindModel(SofindModel sofind){
-        setUserid(sofind.getUserid());
+    public FullSofindModel(final SofindModel sofind) {
+        setUserId(sofind.getUserId());
         setMindMessage(sofind.getMindMessage());
         setCreateTime(sofind.getCreateTime());
         setLikes(sofind.getLikes());
@@ -19,7 +19,7 @@ public class FullSofindModel extends SofindModel {
         return mUserFullName;
     }
 
-    public void setUserFullName(String mUserFullName) {
+    public void setUserFullName(final String mUserFullName) {
         this.mUserFullName = mUserFullName;
     }
 }

@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.github.kiolk.sofind.R;
-import com.github.kiolk.sofind.data.adapters.SoundRecylerAdapter;
+import com.github.kiolk.sofind.data.adapters.SoundRecyclerAdapter;
 import com.github.kiolk.sofind.data.models.FullSofindModel;
 import com.github.kiolk.sofind.ui.fragments.base.BaseFragment;
 import com.github.kiolk.sofind.ui.fragments.yoursounds.IYouSoundPresenter;
@@ -25,7 +25,7 @@ import java.util.List;
 
 public class WorldSoundsFragment extends BaseFragment implements IYouSoundView {
 
-    private SoundRecylerAdapter mAdapter;
+    private SoundRecyclerAdapter mAdapter;
     private List<FullSofindModel> mListSofinds;
     private IYouSoundPresenter mPresenter;
     private int updatePoint = 0;
@@ -35,7 +35,7 @@ public class WorldSoundsFragment extends BaseFragment implements IYouSoundView {
         super.onCreate(savedInstanceState);
         mListSofinds = new ArrayList<>();
         mPresenter = new YouSoundPresenter(this);
-        mAdapter = new SoundRecylerAdapter(getContext(), mListSofinds, mPresenter);
+        mAdapter = new SoundRecyclerAdapter(getContext(), mListSofinds, mPresenter);
     }
 
     @Override

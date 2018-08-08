@@ -10,9 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.github.kiolk.sofind.R;
-import com.github.kiolk.sofind.data.adapters.SoundRecylerAdapter;
+import com.github.kiolk.sofind.data.adapters.SoundRecyclerAdapter;
 import com.github.kiolk.sofind.data.models.FullSofindModel;
-import com.github.kiolk.sofind.data.models.SofindModel;
 import com.github.kiolk.sofind.providers.UserInfoProvider;
 import com.github.kiolk.sofind.ui.fragments.base.BaseFragment;
 
@@ -23,7 +22,7 @@ import java.util.List;
 public class YourSoundsFragment extends BaseFragment implements IYouSoundView {
 
     private String mUserId;
-    private SoundRecylerAdapter mAdapter;
+    private SoundRecyclerAdapter mAdapter;
     private List<FullSofindModel> mListSofinds;
     private IYouSoundPresenter mPresenter;
       int updatePoint = 0;
@@ -34,7 +33,7 @@ public class YourSoundsFragment extends BaseFragment implements IYouSoundView {
         super.onCreate(savedInstanceState);
         mListSofinds = new ArrayList<>();
         mPresenter = new YouSoundPresenter(this);
-        mAdapter = new SoundRecylerAdapter(getContext(), mListSofinds, mPresenter);
+        mAdapter = new SoundRecyclerAdapter(getContext(), mListSofinds, mPresenter);
     }
 
     @Nullable
@@ -72,7 +71,7 @@ public class YourSoundsFragment extends BaseFragment implements IYouSoundView {
     @Override
     public void setUserSound(FullSofindModel userSofind) {
         if(mUserId != null ){
-            if(mUserId.equals(userSofind.getUserid())){
+            if(mUserId.equals(userSofind.getUserId())){
                 mListSofinds.add(0, userSofind);
                 mAdapter.notifyDataSetChanged();
             }
@@ -89,7 +88,7 @@ public class YourSoundsFragment extends BaseFragment implements IYouSoundView {
             updatePoint = mListSofinds.size();
         }
         if(mUserId != null ){
-            if(mUserId.equals(userSofind.getUserid())){
+            if(mUserId.equals(userSofind.getUserId())){
                 mListSofinds.add(updatePoint, userSofind);
                 mAdapter.notifyDataSetChanged();
             }

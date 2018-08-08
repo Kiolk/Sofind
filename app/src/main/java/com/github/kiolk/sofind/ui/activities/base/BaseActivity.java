@@ -7,10 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.github.kiolk.sofind.providers.ThemeProvider;
 
+/**
+ * Class for implement common logic for all screens
+ */
 public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
         ThemeProvider.applyTheme(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);

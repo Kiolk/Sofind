@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.github.kiolk.sofind.R;
-import com.github.kiolk.sofind.data.ObjectResultListener;
+import com.github.kiolk.sofind.data.listeners.ObjectResultListener;
 import com.github.kiolk.sofind.data.managers.DataManager;
 import com.github.kiolk.sofind.data.models.UserModel;
 import com.github.kiolk.sofind.providers.LanguageProvider;
@@ -19,6 +19,9 @@ import com.github.kiolk.sofind.ui.activities.registration.RegistrationActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * Activity start first and check logged user or not
+ */
 public class SplashActivity extends BaseActivity {
 
     private static final int RC_REGISTRATION = 0;
@@ -27,7 +30,7 @@ public class SplashActivity extends BaseActivity {
     FirebaseAuth.AuthStateListener mFirebaseAuthListener;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
         checkLocale();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
@@ -36,21 +39,21 @@ public class SplashActivity extends BaseActivity {
 
     private void checkLocale() {
         String language = LanguageProvider.getLanguage(getBaseContext());
-        if(language.equals(PrefGetter.DEFAULT_VALUE)){
+        if (language.equals(PrefGetter.DEFAULT_VALUE)) {
             language = LanguageProvider.LANGUAGE_EN;
         }
         LanguageProvider.changeLocale(getBaseContext(), language);
     }
 
-    private void checkAuthentication(){
-        mFirebaseAuthListener = new  FirebaseAuth.AuthStateListener(){
+    private void checkAuthentication() {
+        mFirebaseAuthListener = new FirebaseAuth.AuthStateListener() {
 
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
+            public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
+                final FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
                     startHomeActivity();
-                }else{
+                } else {
                     startRegistrationPage();
                 }
             }
@@ -59,28 +62,29 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == RC_REGISTRATION){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == RC_REGISTRATION) {
+            if (resultCode == Activity.RESULT_OK) {
                 startHomeActivity();
-            }else if(resultCode == Activity.RESULT_CANCELED){
+            } else if (resultCode == Activity.RESULT_CANCELED) {
                 finish();
             }
         }
     }
 
     private void startRegistrationPage() {
-        Intent intent = new Intent(getBaseContext(), RegistrationActivity.class);
+        final Intent intent = new Intent(getBaseContext(), RegistrationActivity.class);
         startActivityForResult(intent, RC_REGISTRATION);
     }
 
     private void startHomeActivity() {
-        Intent intent = new Intent(getBaseContext(), HomeActivity.class);
+        final Intent intent = new Intent(getBaseContext(), HomeActivity.class);
         DataManager.getInstance().getUserInformation(new ObjectResultListener() {
+
             @Override
-            public void resultProcess(Object result) {
-                UserModel userInformation = (UserModel) result;
+            public void resultProcess(final Object result) {
+                final UserModel userInformation = (UserModel) result;
                 UserInfoProvider.saveUserId(getBaseContext(), userInformation.getUserId());
                 UserInfoProvider.saveUserName(getBaseContext(), userInformation.getUserName(),
                         userInformation.getSurname());

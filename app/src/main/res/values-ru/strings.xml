@@ -49,6 +49,7 @@
     <string name="YOUR_CURRENT_PASSWORD">You current password</string>
     <string name="YOUR_SOUND">Type your sound</string>
     <string name="DESCRIPTION_MESSAGE_BODY">Your message can not less than 1 and more 100 charachters</string>
+    <string name="EXAMLE">Example of sound</string>
     <string name="INPUT_MESSAGE">Input your message:</string>
     <string name="TEST_NUMBER">3</string>
 
@@ -61,5 +62,10 @@
         <item>be</item>
         <item>en</item>
         <item>ru</item>
+    </string-array>
+    <string-array name="LANGUAGES_FULL_NAME">
+        <item>Беларуская</item>
+        <item>English</item>
+        <item>Русский</item>
     </string-array>
 </resources>

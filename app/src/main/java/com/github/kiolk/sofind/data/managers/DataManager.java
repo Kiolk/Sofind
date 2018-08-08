@@ -3,8 +3,8 @@ package com.github.kiolk.sofind.data.managers;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.github.kiolk.sofind.data.ObjectResultListener;
-import com.github.kiolk.sofind.data.SimpleResultListener;
+import com.github.kiolk.sofind.data.listeners.ObjectResultListener;
+import com.github.kiolk.sofind.data.listeners.SimpleResultListener;
 import com.github.kiolk.sofind.data.models.FullSofindModel;
 import com.github.kiolk.sofind.data.models.SofindModel;
 import com.github.kiolk.sofind.data.models.UserModel;
@@ -24,35 +24,32 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class DataManager implements RegistrationModel, RealDataBaseModel, ISoundManager {
+public final class DataManager implements RegistrationModel, RealDataBaseModel, ISoundManager {
 
     private static final String SOFIND_USER = "SofindUsers";
     private static final String SOFIND_ITEMS = "SofindItems";
 
     private static DataManager mInstance;
 
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mUserDatabaseReference;
-    private DatabaseReference mSoundDatabaseReference;
+    //    private FirebaseAuth.AuthStateListener mAuthListener;
+    private final DatabaseReference mUserDatabaseReference;
+    private final DatabaseReference mSoundDatabaseReference;
     private ChildEventListener mChildEventListener;
     private ChildEventListener mSoundChildEventListener;
     private ChildEventListener mUpdateChildListener;
 
-    private List<SofindModel> mSofindList = new ArrayList<>();
-    private Map<String, String> mUsers = new HashMap<>();
+    //    private final List<SofindModel> mSofindList = new ArrayList<>();
+    private final Map<String, String> mUsers = new HashMap<>();
 
-    private int mLastSofinds = 8;
+//    private final int mLastSofinds = 8;
 
     private DataManager() {
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mUserDatabaseReference = mFirebaseDatabase.getReference().child(SOFIND_USER);
-        mSoundDatabaseReference = mFirebaseDatabase.getReference().child(SOFIND_ITEMS);
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        mUserDatabaseReference = firebaseDatabase.getReference().child(SOFIND_USER);
+        mSoundDatabaseReference = firebaseDatabase.getReference().child(SOFIND_ITEMS);
     }
 
     public static DataManager getInstance() {
@@ -63,58 +60,61 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
     }
 
     @Override
-    public void userLogin(String email, String password, final SimpleResultListener listener) {
+    public void userLogin(final String email, final String password, final SimpleResultListener listener) {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+            public void onComplete(@NonNull final Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     listener.onSuccess();
                 } else {
-                    listener.onError("Error");
+                    listener.onError();
                 }
             }
         });
     }
 
     @Override
-    public void registerNewUser(String email, String password, final SimpleResultListener simpleResultListener) {
+    public void registerNewUser(final String email, final String password, final SimpleResultListener simpleResultListener) {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+            public void onComplete(@NonNull final Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     simpleResultListener.onSuccess();
                 } else {
-                    simpleResultListener.onError("Error");
+                    simpleResultListener.onError();
                 }
             }
         });
     }
+//
+//    @Override
+//    public void addStateListener(final SimpleResultListener listener) {
+//        if (mAuthListener == null) {
+//            mAuthListener = new FirebaseAuth.AuthStateListener() {
+//
+//                @Override
+//                public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
+//                    if (firebaseAuth.getCurrentUser() == null) {
+//
+//                    }
+//                }
+//            };
+//            FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
+//        }
+//    }
+//
+//    @Override
+//    public void removeStateListener() {
+//        if (mAuthListener != null) {
+//            FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
+//            mAuthListener = null;
+//        }
+//    }
 
     @Override
-    public void addStateListener(SimpleResultListener listener) {
-        if (mAuthListener == null) {
-            mAuthListener = new FirebaseAuth.AuthStateListener() {
-                @Override
-                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                    if (firebaseAuth.getCurrentUser() == null) {
-
-                    }
-                }
-            };
-            FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
-        }
-    }
-
-    @Override
-    public void removeStateListener() {
-        if (mAuthListener != null) {
-            FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
-            mAuthListener = null;
-        }
-    }
-
-    @Override
-    public void signOut(SimpleResultListener simpleResultListener) {
+    public void signOut(final SimpleResultListener simpleResultListener) {
         FirebaseAuth.getInstance().signOut();
         simpleResultListener.onSuccess();
     }
@@ -128,16 +128,17 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
     }
 
     @Override
-    public void saveNewUser(UserModel user, final SimpleResultListener listener) {
+    public void saveNewUser(final UserModel user, final SimpleResultListener listener) {
         mUserDatabaseReference.child(user.getUserId()).setValue(user)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
+
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+                    public void onComplete(@NonNull final Task<Void> task) {
                         if (task.isSuccessful()) {
 //                            task.getException().getMessage();
                             listener.onSuccess();
                         } else {
-                            listener.onError("Error");
+                            listener.onError();
                         }
 
                     }
@@ -146,37 +147,42 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
 
     @Override
     public void getUserInformation(final ObjectResultListener listener) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
             mChildEventListener = new ChildEventListener() {
+
                 @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    UserModel user = dataSnapshot.getValue(UserModel.class);
-                    mUsers.put(user.getUserId(), user.getUserName() + " " + user.getSurname());
-                    if (user != null && user.getUserId().equals(userId)) {
-                        listener.resultProcess(user);
-                        mUserDatabaseReference.removeEventListener(mChildEventListener);
+                public void onChildAdded(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
+                    final UserModel user = dataSnapshot.getValue(UserModel.class);
+                    if (user != null) {
+                        mUsers.put(user.getUserId(), user.getUserName() + " " + user.getSurname());
+
+                        if (user.getUserId().equals(userId)) {
+                            listener.resultProcess(user);
+                            mUserDatabaseReference.removeEventListener(mChildEventListener);
+                        }
                     }
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 }
 
                 @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                public void onChildChanged(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
 
                 }
 
                 @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                public void onChildRemoved(@NonNull final DataSnapshot dataSnapshot) {
 
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                public void onChildMoved(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull final DatabaseError databaseError) {
 
                 }
             };
@@ -184,21 +190,22 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
         }
     }
 
-    @Override
-    public List<UserModel> getAllUsers() {
-        return null;
-    }
+//    @Override
+//    public List<UserModel> getAllUsers() {
+//        return null;
+//    }
 
     @Override
-    public void updateNewSound(FullSofindModel sofind, final SimpleResultListener listener) {
+    public void updateNewSound(final FullSofindModel sofind, final SimpleResultListener listener) {
         mSoundDatabaseReference.child(sofind.getCreateTime() + "")
                 .setValue(sofind).addOnCompleteListener(new OnCompleteListener<Void>() {
+
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
+            public void onComplete(@NonNull final Task<Void> task) {
                 if (task.isSuccessful()) {
                     listener.onSuccess();
                 } else {
-                    listener.onError("Error");
+                    listener.onError();
                 }
             }
         });
@@ -209,29 +216,30 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
         final Query lastItems = mSoundDatabaseReference.orderByKey().limitToLast(ConstantUtil.FIRST_PORTION_OF_ITEMS);
         if (mSoundChildEventListener == null) {
             mSoundChildEventListener = new ChildEventListener() {
+
                 @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                public void onChildAdded(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
                     presenter.updateYouSound(dataSnapshot.getValue(FullSofindModel.class));
                 }
 
                 @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                public void onChildChanged(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
 //                    presenter.updateYouSound(dataSnapshot.getValue(SofindModel.class));
 //                    lastItems.removeEventListener(mSoundChildEventListener);
                 }
 
                 @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                public void onChildRemoved(@NonNull final DataSnapshot dataSnapshot) {
 
                 }
 
                 @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                public void onChildMoved(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
 
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                public void onCancelled(@NonNull final DatabaseError databaseError) {
 
                 }
             };
@@ -246,7 +254,7 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
             mSoundDatabaseReference.removeEventListener(mSoundChildEventListener);
             mSoundChildEventListener = null;
         }
-        if (mUpdateChildListener != null){
+        if (mUpdateChildListener != null) {
             mSoundDatabaseReference.removeEventListener(mUpdateChildListener);
             mUpdateChildListener = null;
         }
@@ -254,40 +262,41 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
 
     @Override
     public void getUserFullName(final String userId, final ObjectResultListener listener) {
-        String fullName = mUsers.get(userId);
+        final String fullName = mUsers.get(userId);
         if (fullName != null) {
             listener.resultProcess(fullName);
         } else {
             mUserDatabaseReference.addChildEventListener(new ChildEventListener() {
+
                 @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    UserModel user = dataSnapshot.getValue(UserModel.class);
+                public void onChildAdded(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
+                    final UserModel user = dataSnapshot.getValue(UserModel.class);
                     mUsers.put(user.getUserId(), user.getUserName() + " " + user.getSurname());
-                    if (user != null && user.getUserId().equals(userId)) {
-                        String fullname = user.getUserName() + " " + user.getSurname();
+                    if (user.getUserId().equals(userId)) {
+                        final String fullName = user.getUserName() + " " + user.getSurname();
                         mUserDatabaseReference.removeEventListener(this);
-                        listener.resultProcess(fullname);
+                        listener.resultProcess(fullName);
                     }
 //                mUserDatabaseReference.removeEventListener(this);
                 }
 
                 @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                public void onChildChanged(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
 
                 }
 
                 @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                public void onChildRemoved(@NonNull final DataSnapshot dataSnapshot) {
 
                 }
 
                 @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                public void onChildMoved(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
 
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                public void onCancelled(@NonNull final DatabaseError databaseError) {
 
                 }
             });
@@ -298,76 +307,78 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
     public void updateSound(final SofindModel updatedSofind) {
         final Query single = mSoundDatabaseReference;
         single.addChildEventListener(new ChildEventListener() {
+
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                FullSofindModel sofind = dataSnapshot.getValue(FullSofindModel.class);
+            public void onChildAdded(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
+                final FullSofindModel sofind = dataSnapshot.getValue(FullSofindModel.class);
                 if (sofind.getCreateTime() == updatedSofind.getCreateTime()) {
-                    int likes = sofind.getLikes();
+                    final int likes = sofind.getLikes();
                     updatedSofind.setLikes(likes + 1);
-                    mSoundDatabaseReference.child(updatedSofind.getCreateTime() + "").setValue(updatedSofind);
+                    mSoundDatabaseReference.child(String.valueOf(updatedSofind.getCreateTime())).setValue(updatedSofind);
                     single.removeEventListener(this);
                 }
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            public void onChildChanged(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
 
             }
 
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            public void onChildRemoved(@NonNull final DataSnapshot dataSnapshot) {
 
             }
 
             @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            public void onChildMoved(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
 
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull final DatabaseError databaseError) {
 
             }
         });
-//        mSoundDatabaseReference.child(updatedSofind.getUserid()+updatedSofind.getCreateTime()).setValue(updatedSofind);
+//        mSoundDatabaseReference.child(updatedSofind.getUserId()+updatedSofind.getCreateTime()).setValue(updatedSofind);
     }
 
     @Override
-    public void loadMoreSofinds(final IYouSoundPresenter presenter, int getSofinds) {
+    public void loadMoreSofinds(final IYouSoundPresenter presenter, final int getSofinds) {
 //        mLastSofinds += 20;
-        if(mUpdateChildListener == null){
+        if (mUpdateChildListener == null) {
             mUpdateChildListener = new ChildEventListener() {
-                long lastUpdated = 0L;
+
+                long lastUpdated;
 
                 @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    FullSofindModel sofind = dataSnapshot.getValue(FullSofindModel.class);
+                public void onChildAdded(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
+                    final FullSofindModel sofind = dataSnapshot.getValue(FullSofindModel.class);
                     if (lastUpdated == 0) {
                         lastUpdated = sofind.getCreateTime();
                     }
 //                    if (lastUpdated >= sofind.getCreateTime()) {
-                        presenter.updateAditionalItems(sofind);
+                    presenter.updateAditionalItems(sofind);
 //                    }
 
                 }
 
                 @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                public void onChildChanged(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
 
                 }
 
                 @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                public void onChildRemoved(@NonNull final DataSnapshot dataSnapshot) {
 
                 }
 
                 @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                public void onChildMoved(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
 
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                public void onCancelled(@NonNull final DatabaseError databaseError) {
 
                 }
             };
@@ -375,7 +386,7 @@ public class DataManager implements RegistrationModel, RealDataBaseModel, ISound
         mSoundDatabaseReference.orderByKey().limitToLast(getSofinds).addChildEventListener(mUpdateChildListener);
     }
 
-    public void changeUserFullName(String userId, String fulUserName){
+    public void changeUserFullName(final String userId, final String fulUserName) {
         mUsers.put(userId, fulUserName);
     }
 }

@@ -1,8 +1,13 @@
 package com.github.kiolk.sofind.data.models;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 
-public class UserModel implements Serializable{
+/**
+ * Model for storing information about user.
+ */
+public class UserModel implements Serializable {
 
     private String mUserId;
     private String mUserName;
@@ -12,11 +17,12 @@ public class UserModel implements Serializable{
     private int mAge;
     private boolean isMale;
 
-    public void setUserId(String value){
+    public void setUserId(final String value) {
         mUserId = value;
     }
 
-    public String getUserId(){
+    @NonNull
+    public String getUserId() {
         return mUserId;
     }
 
@@ -24,7 +30,7 @@ public class UserModel implements Serializable{
         return mUserName;
     }
 
-    public void setUserName(String mUserName) {
+    public void setUserName(final String mUserName) {
         this.mUserName = mUserName;
     }
 
@@ -32,7 +38,7 @@ public class UserModel implements Serializable{
         return mSurname;
     }
 
-    public void setSurname(String mSurname) {
+    public void setSurname(final String mSurname) {
         this.mSurname = mSurname;
     }
 
@@ -40,7 +46,7 @@ public class UserModel implements Serializable{
         return mEmail;
     }
 
-    public void setEmail(String mEmail) {
+    public void setEmail(final String mEmail) {
         this.mEmail = mEmail;
     }
 
@@ -48,7 +54,7 @@ public class UserModel implements Serializable{
         return mPassword;
     }
 
-    public void setPassword(String mPassword) {
+    public void setPassword(final String mPassword) {
         this.mPassword = mPassword;
     }
 
@@ -56,7 +62,7 @@ public class UserModel implements Serializable{
         return mAge;
     }
 
-    public void setAge(int mAge) {
+    public void setAge(final int mAge) {
         this.mAge = mAge;
     }
 
@@ -64,7 +70,7 @@ public class UserModel implements Serializable{
         return isMale;
     }
 
-    public void setMale(boolean male) {
+    public void setMale(final boolean male) {
         isMale = male;
     }
 }

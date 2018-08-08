@@ -1,10 +1,9 @@
 package com.github.kiolk.sofind.ui.fragments.profile;
 
-import com.github.kiolk.sofind.data.ObjectResultListener;
-import com.github.kiolk.sofind.data.SimpleResultListener;
+import com.github.kiolk.sofind.data.listeners.ObjectResultListener;
+import com.github.kiolk.sofind.data.listeners.SimpleResultListener;
 import com.github.kiolk.sofind.data.managers.DataManager;
 import com.github.kiolk.sofind.data.models.UserModel;
-import com.github.kiolk.sofind.providers.UserInfoProvider;
 
 public class ProfilePresenter implements IProfilePresenter {
 
@@ -29,7 +28,7 @@ public class ProfilePresenter implements IProfilePresenter {
             }
 
             @Override
-            public void onError(String message) {
+            public void onError() {
 
             }
         });

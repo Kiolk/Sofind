@@ -1,17 +1,20 @@
 package com.github.kiolk.sofind.ui.activities.registration;
 
-import com.github.kiolk.sofind.data.SimpleResultListener;
+import com.github.kiolk.sofind.data.listeners.SimpleResultListener;
 import com.github.kiolk.sofind.data.models.UserModel;
 
+/**
+ * Interface of model component of MVP for registration process
+ */
 public interface RegistrationModel {
 
     void userLogin(String email, String password, SimpleResultListener listener);
 
     void registerNewUser(String email, String password, SimpleResultListener simpleResultListener);
 
-    void addStateListener(SimpleResultListener listener);
-
-    void removeStateListener();
+//    void addStateListener(SimpleResultListener listener);
+//
+//    void removeStateListener();
 
     void signOut(SimpleResultListener simpleResultListener);
 

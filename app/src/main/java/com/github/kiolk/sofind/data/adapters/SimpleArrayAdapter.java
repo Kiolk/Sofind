@@ -13,31 +13,39 @@ import android.widget.TextView;
 import com.github.kiolk.sofind.R;
 import com.github.kiolk.sofind.data.models.SettingItemModel;
 
-import java.util.ArrayList;
+import java.util.List;
 
-
+/**
+ * Class implement ArrayAdapter for representing settings items in ListView
+ */
 public class SimpleArrayAdapter extends ArrayAdapter<SettingItemModel> {
 
-    private  Context inputContext;
-    private  int resource;
-    private  ArrayList<SettingItemModel> objects;
+    private final Context inputContext;
+    private final int resource;
+    private final List<SettingItemModel> objects;
 
-    public SimpleArrayAdapter(@NonNull Context context, int resource, @NonNull ArrayList<SettingItemModel> objects) {
+    public SimpleArrayAdapter(@NonNull final Context context, final int resource, @NonNull final List<SettingItemModel> objects) {
         super(context, resource, objects);
         this.inputContext = context;
-        this.objects =  objects;
+        this.objects = objects;
         this.resource = resource;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) inputContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(resource, parent, false);
-        TextView title = view.findViewById(R.id.setting_title_text_view);
-        title.setText(objects.get(position).getTitle());
-        ImageView icon = view.findViewById(R.id.setting_item_image_view);
-        icon.setImageDrawable(objects.get(position).getResourse());
-        return view;
+    public View getView(final int position, @Nullable final View convertView, @NonNull final ViewGroup parent) {
+        final LayoutInflater inflater = (LayoutInflater) inputContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view;
+
+        if (inflater != null) {
+            view = inflater.inflate(resource, parent, false);
+            final TextView title = view.findViewById(R.id.setting_title_text_view);
+            title.setText(objects.get(position).getTitle());
+            final ImageView icon = view.findViewById(R.id.setting_item_image_view);
+            icon.setImageDrawable(objects.get(position).getResource());
+            return view;
+        }
+
+        return super.getView(position, convertView, parent);
     }
 }

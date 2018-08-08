@@ -1,32 +1,34 @@
 package com.github.kiolk.sofind.data.models;
 
-
 import android.graphics.drawable.Drawable;
 
+/**
+ * Class model for storing simple information about setting item.
+ */
 public class SettingItemModel {
 
     private String mTitle;
 
-    public SettingItemModel(String title, Drawable resource) {
+    public SettingItemModel(final String title, final Drawable resource) {
         this.mTitle = title;
-        this.mResourse = resource;
+        this.mResource = resource;
     }
 
     public String getTitle() {
         return mTitle;
     }
 
-    public void setTitle(String mTitle) {
+    public void setTitle(final String mTitle) {
         this.mTitle = mTitle;
     }
 
-    public Drawable getResourse() {
-        return mResourse;
+    public Drawable getResource() {
+        return mResource;
     }
 
-    public void setResourse(Drawable mResourse) {
-        this.mResourse = mResourse;
+    public void setResource(final Drawable mResource) {
+        this.mResource = mResource;
     }
 
-    private Drawable mResourse;
+    private Drawable mResource;
 }

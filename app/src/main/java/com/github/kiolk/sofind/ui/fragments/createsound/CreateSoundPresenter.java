@@ -1,10 +1,9 @@
 package com.github.kiolk.sofind.ui.fragments.createsound;
 
-import com.github.kiolk.sofind.data.SimpleResultListener;
+import com.github.kiolk.sofind.data.listeners.SimpleResultListener;
 import com.github.kiolk.sofind.data.managers.DataManager;
 import com.github.kiolk.sofind.data.models.FullSofindModel;
 import com.github.kiolk.sofind.data.models.SofindModel;
-import com.github.kiolk.sofind.data.models.UserModel;
 import com.github.kiolk.sofind.providers.UserInfoProvider;
 
 public class CreateSoundPresenter implements ICreateSoundPresenter {
@@ -25,7 +24,7 @@ public class CreateSoundPresenter implements ICreateSoundPresenter {
         }
         if(mNewSofind == null){
             mNewSofind = new SofindModel();
-            mNewSofind.setUserid(UserInfoProvider.getUserId(mView.getContext()));
+            mNewSofind.setUserId(UserInfoProvider.getUserId(mView.getContext()));
             mNewSofind.setCreateTime(System.currentTimeMillis());
         }
         mNewSofind.setMindMessage(mView.getSofindBody());
@@ -36,7 +35,7 @@ public class CreateSoundPresenter implements ICreateSoundPresenter {
     public void saveNewSofind(String sofindBody) {
         mNewSofind.setMindMessage(sofindBody);
         FullSofindModel fullSofindModel = new FullSofindModel();
-        fullSofindModel.setUserid(UserInfoProvider.getUserId(mView.getContext()));
+        fullSofindModel.setUserId(UserInfoProvider.getUserId(mView.getContext()));
         fullSofindModel.setMindMessage(sofindBody);
         fullSofindModel.setCreateTime(System.currentTimeMillis());
         DataManager.getInstance().updateNewSound(fullSofindModel, new SimpleResultListener() {
@@ -46,7 +45,7 @@ public class CreateSoundPresenter implements ICreateSoundPresenter {
             }
 
             @Override
-            public void onError(String message) {
+            public void onError() {
                 mView.error();
             }
         });

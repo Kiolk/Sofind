@@ -1,6 +1,6 @@
 package com.github.kiolk.sofind.ui.fragments.yoursounds;
 
-import com.github.kiolk.sofind.data.ObjectResultListener;
+import com.github.kiolk.sofind.data.listeners.ObjectResultListener;
 import com.github.kiolk.sofind.data.managers.DataManager;
 import com.github.kiolk.sofind.data.models.FullSofindModel;
 import com.github.kiolk.sofind.data.models.SofindModel;
@@ -28,7 +28,7 @@ public class YouSoundPresenter implements IYouSoundPresenter {
     @Override
     public void updateYouSound(SofindModel sofind) {
         final FullSofindModel fullSofind = new FullSofindModel(sofind);
-        DataManager.getInstance().getUserFullName(sofind.getUserid(), new ObjectResultListener() {
+        DataManager.getInstance().getUserFullName(sofind.getUserId(), new ObjectResultListener() {
             @Override
             public void resultProcess(Object result) {
                 String fullName = (String) result;
@@ -61,7 +61,7 @@ public class YouSoundPresenter implements IYouSoundPresenter {
         if(mCount > 0){
             mView.shouUpdateProgressBar(false);
             final FullSofindModel fullSofind = new FullSofindModel(sofind);
-            DataManager.getInstance().getUserFullName(sofind.getUserid(), new ObjectResultListener() {
+            DataManager.getInstance().getUserFullName(sofind.getUserId(), new ObjectResultListener() {
                 @Override
                 public void resultProcess(Object result) {
                     String fullName = (String) result;

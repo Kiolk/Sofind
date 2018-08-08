@@ -9,7 +9,6 @@
         android:id="@+id/red_fab"
         style="@style/FloatButtonDialogStyle"
         app:backgroundTint="@color/RED"
-        app:elevation="@dimen/ENABLE_BUTTON_ELEVATION"
         app:fabSize="normal" />
 
     <android.support.design.widget.FloatingActionButton
@@ -18,7 +17,6 @@
         android:layout_toEndOf="@+id/red_fab"
         android:layout_toRightOf="@+id/red_fab"
         app:backgroundTint="@color/GREEN"
-        app:elevation="@dimen/ENABLE_BUTTON_ELEVATION"
         app:fabSize="normal" />
 
     <android.support.design.widget.FloatingActionButton
@@ -27,7 +25,6 @@
         android:layout_toEndOf="@+id/green_fab"
         android:layout_toRightOf="@+id/green_fab"
         app:backgroundTint="@color/BLUE"
-        app:elevation="@dimen/ENABLE_BUTTON_ELEVATION"
         app:fabSize="normal" />
 
 

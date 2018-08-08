@@ -1,7 +1,7 @@
 package com.github.kiolk.sofind.ui.fragments.createsound;
 
-import com.github.kiolk.sofind.data.ObjectResultListener;
-import com.github.kiolk.sofind.data.SimpleResultListener;
+import com.github.kiolk.sofind.data.listeners.ObjectResultListener;
+import com.github.kiolk.sofind.data.listeners.SimpleResultListener;
 import com.github.kiolk.sofind.data.models.FullSofindModel;
 import com.github.kiolk.sofind.data.models.SofindModel;
 import com.github.kiolk.sofind.ui.fragments.yoursounds.IYouSoundPresenter;

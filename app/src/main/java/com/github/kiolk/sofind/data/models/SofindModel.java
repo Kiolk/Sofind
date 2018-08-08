@@ -1,27 +1,30 @@
 package com.github.kiolk.sofind.data.models;
 
+/**
+ * Model for storing basic information about single sofind(Sound of mind) item.
+ */
 public class SofindModel {
 
-    private String mUserid;
+    private String mUserId;
     private String mMindMessage;
     private long mCreateTime;
     private int mNumberOfLikes;
 
     private int mLikes;
 
-    public String getUserid() {
-        return mUserid;
+    public String getUserId() {
+        return mUserId;
     }
 
-    public void setUserid(String mUserid) {
-        this.mUserid = mUserid;
+    public void setUserId(final String mUserId) {
+        this.mUserId = mUserId;
     }
 
     public String getMindMessage() {
         return mMindMessage;
     }
 
-    public void setMindMessage(String mMindMessage) {
+    public void setMindMessage(final String mMindMessage) {
         this.mMindMessage = mMindMessage;
     }
 
@@ -29,7 +32,7 @@ public class SofindModel {
         return mCreateTime;
     }
 
-    public void setCreateTime(long mCreateTime) {
+    public void setCreateTime(final long mCreateTime) {
         this.mCreateTime = mCreateTime;
     }
 
@@ -37,7 +40,7 @@ public class SofindModel {
         return mLikes;
     }
 
-    public void setLikes(int mLikes) {
+    public void setLikes(final int mLikes) {
         this.mLikes = mLikes;
     }
 
@@ -45,7 +48,7 @@ public class SofindModel {
         return mNumberOfLikes;
     }
 
-    public void setNumberOfLikes(){
+    public void setNumberOfLikes() {
         ++mNumberOfLikes;
     }
 }

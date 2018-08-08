@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Sofind</string>
-    <string name="YOUR_SOUNDS">Тваі гукі мысляў</string>
+    <string name="YOUR_SOUNDS">Гукі тваіх думак</string>
     <string name="WORLD_SOUNDS">World sounds</string>
     <string name="CREATE_SOUND">Create sound</string>
     <string name="EDIT_PROFILE">Edit profile</string>
@@ -49,6 +49,7 @@
     <string name="YOUR_CURRENT_PASSWORD">You current password</string>
     <string name="YOUR_SOUND">Type your sound</string>
     <string name="DESCRIPTION_MESSAGE_BODY">Your message can not less than 1 and more 100 charachters</string>
+    <string name="EXAMLE">Example of sound</string>
     <string name="INPUT_MESSAGE">Input your message:</string>
     <string name="TEST_NUMBER">3</string>
 
