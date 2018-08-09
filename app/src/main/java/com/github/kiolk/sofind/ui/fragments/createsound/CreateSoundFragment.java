@@ -16,7 +16,6 @@ import com.github.kiolk.sofind.data.models.SofindModel;
 import com.github.kiolk.sofind.ui.fragments.base.BaseFragment;
 import com.github.kiolk.sofind.util.ConverterUtil;
 
-
 public class CreateSoundFragment extends BaseFragment implements ICreateSoundView {
 
     private static final int MAX_NUMBER_OF_CHARACTERS = 100;
@@ -30,15 +29,15 @@ public class CreateSoundFragment extends BaseFragment implements ICreateSoundVie
     private boolean isValidSoFindBody = true;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = new CreateSoundPresenter(this);
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_create_sound, null);
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_create_sound, null);
         mUserName = view.findViewById(R.id.user_name_text_view);
         mSoundBody = view.findViewById(R.id.sound_body_text_view);
         mDate = view.findViewById(R.id.date_create_text_view);
@@ -62,24 +61,26 @@ public class CreateSoundFragment extends BaseFragment implements ICreateSoundVie
     @Override
     public void prepareForm() {
         mPresenter.updateExampleForm();
-        if(mTextChangeListener == null) {
+        if (mTextChangeListener == null) {
             mTextChangeListener = new TextWatcher() {
+
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
 
                 }
 
                 @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if(s.length() >= MAX_NUMBER_OF_CHARACTERS - 1){
+                public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
+                    if (s.length() >= MAX_NUMBER_OF_CHARACTERS - 1) {
                         mUserInput.setError(getResources().getString(R.string.MORE_SYMBOLS) + " " + MAX_NUMBER_OF_CHARACTERS);
                         isValidSoFindBody = false;
                     }
+                    isValidSoFindBody = true;
                     mPresenter.updateExampleForm();
                 }
 
                 @Override
-                public void afterTextChanged(Editable s) {
+                public void afterTextChanged(final Editable s) {
 
                 }
             };
@@ -89,7 +90,7 @@ public class CreateSoundFragment extends BaseFragment implements ICreateSoundVie
     }
 
     @Override
-    public void updateExample(SofindModel sofind, String userName) {
+    public void updateExample(final SofindModel sofind, final String userName) {
         mUserName.setText(userName);
         mDate.setText(ConverterUtil.convertEpochTime(getContext(), sofind.getCreateTime(), ConverterUtil.DAY_PATTERN));
         mSoundBody.setText(sofind.getMindMessage());
@@ -97,10 +98,9 @@ public class CreateSoundFragment extends BaseFragment implements ICreateSoundVie
 
     @Override
     public void saveNewSofind() {
-//        mUserInput.removeTextChangedListener(mTextChangeListener);
-        if(isValidSoFindBody){
+        if (isValidSoFindBody) {
             mPresenter.saveNewSofind(getSofindBody());
-        }else{
+        } else {
             Toast.makeText(getContext(), getResources().getString(R.string.MORE_SYMBOLS) + " " + MAX_NUMBER_OF_CHARACTERS, Toast.LENGTH_SHORT).show();
         }
 
@@ -113,9 +113,9 @@ public class CreateSoundFragment extends BaseFragment implements ICreateSoundVie
     }
 
     @Override
-    public void succesSave() {
+    public void successSave() {
         clearForm();
-        Toast.makeText(getContext(), "Success save new sound", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.SUCCESS_SAVE_NEW_SOUND, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -125,7 +125,7 @@ public class CreateSoundFragment extends BaseFragment implements ICreateSoundVie
 
     @Override
     public void error() {
-        Toast.makeText(getContext(), "Not save new sound", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.NOT_SAVE_NEW_SOUND, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,9 +24,9 @@ import com.github.kiolk.sofind.util.ConstantUtil;
 public class ProfileFragment extends BaseFragment implements IProfileView {
 
     public static final int INCORRECT_PASSWORD = R.string.INCORRECT_PASSWORD;
-    public static final int NOT_CORRECT_COMPLET_FORM = R.string.NOT_COMPLITE_FORM;
+    public static final int NOT_CORRECT_COMPLETE_FORM = R.string.NOT_COMPLIT_FORM;
 
-    private ProfilePresenter mPresenter = new ProfilePresenter(this);
+    private final ProfilePresenter mPresenter = new ProfilePresenter(this);
     private EditText mUserName;
     private EditText mUserSurname;
     private EditText mUserAge;
@@ -37,25 +36,24 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
     private RadioButton mIsMale;
     private RadioButton mIsFemale;
     private Button mSaVeButton;
-    private RadioGroup mUserSex;
     private ProgressBar mProgressBar;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         changeMenu();
         changeTitle();
         setupToolBar();
-        View view = inflater.inflate(R.layout.fragment_profile, null);
+        final View view = inflater.inflate(R.layout.fragment_profile, null);
         setupView(view);
         return view;
     }
 
-    private void setupView(View view) {
+    private void setupView(final View view) {
         mUserName = view.findViewById(R.id.user_name_edit_profile);
         mUserSurname = view.findViewById(R.id.user_surname_edit_profile);
         mUserAge = view.findViewById(R.id.age_edit_profile);
-        mUserSex = view.findViewById(R.id.sex_edit_profile_radio_group);
+//        final RadioGroup userSex = view.findViewById(R.id.sex_edit_profile_radio_group);
         mUserEmail = view.findViewById(R.id.user_email_text_view);
         mIsFemale = view.findViewById(R.id.female_edit_profile_radio_button);
         mIsMale = view.findViewById(R.id.male_edit_profile_radio_button);
@@ -79,7 +77,7 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
         if (checkCorrectInputInfo()) {
             setupConfirmPasswordDialog();
         } else {
-            showErrorMessage(NOT_CORRECT_COMPLET_FORM);
+            showErrorMessage(NOT_CORRECT_COMPLETE_FORM);
         }
     }
 
@@ -88,7 +86,7 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
     }
 
     @Override
-    public void setInformation(UserModel user) {
+    public void setInformation(final UserModel user) {
         mUserName.setText(user.getUserName());
         mUserSurname.setText(user.getSurname());
         mUserEmail.setText(user.getEmail());
@@ -99,12 +97,13 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
             mIsFemale.setChecked(true);
         }
         mSaVeButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 if (checkCorrectInputInfo()) {
                     setupConfirmPasswordDialog();
                 } else {
-                    showErrorMessage(NOT_CORRECT_COMPLET_FORM);
+                    showErrorMessage(NOT_CORRECT_COMPLETE_FORM);
                 }
             }
         });
@@ -112,14 +111,15 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
 
     @Override
     public void setupConfirmPasswordDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        LayoutInflater inflater = getLayoutInflater();
-        View confirmView = inflater.inflate(R.layout.dialog_confirm_password, null);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        final LayoutInflater inflater = getLayoutInflater();
+        final View confirmView = inflater.inflate(R.layout.dialog_confirm_password, null);
         final EditText mUserConfirmPassword = confirmView.findViewById(R.id.edit_text_dialog);
         builder.setTitle(R.string.SAVE_WITH_CONFIRM).setView(confirmView)
                 .setPositiveButton(R.string.SAVE, new DialogInterface.OnClickListener() {
+
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(final DialogInterface dialog, final int which) {
                         if (mPresenter.confirmUserPassword(mUserConfirmPassword.getText().toString())) {
                             mPresenter.saveUser(getUserInformation());
                         } else {
@@ -130,7 +130,7 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
     }
 
     private UserModel getUserInformation() {
-        UserModel result = new UserModel();
+        final UserModel result = new UserModel();
         result.setMale(mIsMale.isChecked());
         result.setUserName(mUserName.getText().toString());
         result.setSurname(mUserSurname.getText().toString());
@@ -141,15 +141,15 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
 
     @Override
     public void successUpdate() {
-        Toast.makeText(getContext(), "Success save information", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.SUCCES_SAVE_INFORMATION, Toast.LENGTH_SHORT).show();
         UserInfoProvider.saveUserName(getContext(), mUserName.getText().toString(), mUserSurname.getText().toString());
-        HomeActivity activity = (HomeActivity) getActivity();
+        final HomeActivity activity = (HomeActivity) getActivity();
         activity.reloadDrawerLayout();
 //        activity.restart();
     }
 
     @Override
-    public void showProgressBar(boolean isShow) {
+    public void showProgressBar(final boolean isShow) {
         if (isShow) {
             mProgressBar.setVisibility(View.VISIBLE);
         } else {
@@ -158,7 +158,7 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
     }
 
     @Override
-    public void showErrorMessage(int message) {
+    public void showErrorMessage(final int message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
@@ -173,7 +173,7 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
             mUserSurname.setError(getResources().getString(R.string.INPUT_MIN_TWO_SYMBOL) + " " + ConstantUtil.MIN_NUMBER_IN_NAME);
             isCorrect = false;
         }
-        int age = Integer.parseInt(mUserAge.getText().toString());
+        final int age = Integer.parseInt(mUserAge.getText().toString());
         if (age > ConstantUtil.MAX_OLD_VALUE || age < ConstantUtil.MIN_OLD_VALUE) {
             mUserAge.setError(getResources().getString(R.string.INPUT_CORRECT_AGE));
             isCorrect = false;
@@ -183,12 +183,11 @@ public class ProfileFragment extends BaseFragment implements IProfileView {
             mSecondPAssword.setError(getResources().getString(R.string.CONFIRM_PASSWORD_NOT_EQUALS));
             isCorrect = false;
         }
-        if (!mFirstPassword.getText().toString().equals("") && mFirstPassword.getText().toString().length() < ConstantUtil.MIN_NUMBER_IN_PASSWORD) {
-            mFirstPassword.setError(getResources().getString(R.string.SHORT_PASSWOR) + " " + ConstantUtil.MIN_NUMBER_IN_PASSWORD);
+        if (!"".equals(mFirstPassword.getText().toString()) && mFirstPassword.getText().toString().length() < ConstantUtil.MIN_NUMBER_IN_PASSWORD) {
+            mFirstPassword.setError(getResources().getString(R.string.SHORT_PASSWORD) + " " + ConstantUtil.MIN_NUMBER_IN_PASSWORD);
             isCorrect = false;
         }
         return isCorrect;
     }
-
 
 }

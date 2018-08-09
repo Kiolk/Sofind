@@ -22,7 +22,10 @@ import com.github.kiolk.sofind.util.ConstantUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Implementation of IYouSoundView interface for display of sofinds that present on backend, with pagination
+ * and information about new sofinds.
+ */
 public class WorldSoundsFragment extends BaseFragment implements IYouSoundView {
 
     private SoundRecyclerAdapter mAdapter;
@@ -31,7 +34,7 @@ public class WorldSoundsFragment extends BaseFragment implements IYouSoundView {
     private int updatePoint = 0;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListSofinds = new ArrayList<>();
         mPresenter = new YouSoundPresenter(this);
@@ -45,10 +48,10 @@ public class WorldSoundsFragment extends BaseFragment implements IYouSoundView {
     }
 
     @Override
-    public void addLateSound(FullSofindModel userSofind) {
-            if(updatePoint == 0){
-                updatePoint = mListSofinds.size();
-            }
+    public void addLateSound(final FullSofindModel userSofind) {
+        if (updatePoint == 0) {
+            updatePoint = mListSofinds.size();
+        }
         mListSofinds.add(updatePoint, userSofind);
         mAdapter.notifyDataSetChanged();
 
@@ -56,13 +59,14 @@ public class WorldSoundsFragment extends BaseFragment implements IYouSoundView {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_with_recycler_view, null);
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_with_recycler_view, null);
         changeTitle();
         changeMenu();
         setupToolBar();
         return view;
     }
+
     //TODO work with inheritance fields
     private void changeMenu() {
         super.menuId = R.id.search_menu_item;
@@ -74,7 +78,7 @@ public class WorldSoundsFragment extends BaseFragment implements IYouSoundView {
 
     @Override
     public void showUserSounds() {
-        RecyclerView recycler = getView().findViewById(R.id.general_fragment_recycler_view);
+        final RecyclerView recycler = getView().findViewById(R.id.general_fragment_recycler_view);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(mAdapter);
         mPresenter.subscribeOnSounds();
@@ -82,14 +86,15 @@ public class WorldSoundsFragment extends BaseFragment implements IYouSoundView {
     }
 
     @Override
-    public void setUserSound(FullSofindModel userSofind) {
-        if(!mListSofinds.isEmpty() && mListSofinds.get(0).getCreateTime() < userSofind.getCreateTime()
-                && mListSofinds.size() > ConstantUtil.FIRST_PORTION_OF_ITEMS){
+    public void setUserSound(final FullSofindModel userSofind) {
+        if (!mListSofinds.isEmpty() && mListSofinds.get(0).getCreateTime() < userSofind.getCreateTime()
+                && mListSofinds.size() > ConstantUtil.FIRST_PORTION_OF_ITEMS) {
             Snackbar.make(getView(), R.string.NEW_SOFIND, Snackbar.LENGTH_LONG).setAction(R.string.SEE_NEW_ITEM,
                     new View.OnClickListener() {
+
                         @Override
-                        public void onClick(View v) {
-                            RecyclerView recyclerView = getView().findViewById(R.id.general_fragment_recycler_view);
+                        public void onClick(final View v) {
+                            final RecyclerView recyclerView = getView().findViewById(R.id.general_fragment_recycler_view);
                             recyclerView.getLayoutManager().scrollToPosition(0);
                         }
                     }).show();
@@ -105,11 +110,11 @@ public class WorldSoundsFragment extends BaseFragment implements IYouSoundView {
     }
 
     @Override
-    public void shouUpdateProgressBar(boolean isShow) {
-        ProgressBar progressBar = getView().findViewById(R.id.update_progress_bar);
-        if(isShow){
+    public void showUpdateProgressBar(final boolean isShow) {
+        final ProgressBar progressBar = getView().findViewById(R.id.update_progress_bar);
+        if (isShow) {
             progressBar.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             progressBar.setVisibility(View.GONE);
         }
     }

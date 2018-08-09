@@ -34,17 +34,13 @@ public final class DataManager implements RegistrationModel, RealDataBaseModel, 
 
     private static DataManager mInstance;
 
-    //    private FirebaseAuth.AuthStateListener mAuthListener;
     private final DatabaseReference mUserDatabaseReference;
     private final DatabaseReference mSoundDatabaseReference;
     private ChildEventListener mChildEventListener;
     private ChildEventListener mSoundChildEventListener;
     private ChildEventListener mUpdateChildListener;
 
-    //    private final List<SofindModel> mSofindList = new ArrayList<>();
     private final Map<String, String> mUsers = new HashMap<>();
-
-//    private final int mLastSofinds = 8;
 
     private DataManager() {
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -88,30 +84,6 @@ public final class DataManager implements RegistrationModel, RealDataBaseModel, 
             }
         });
     }
-//
-//    @Override
-//    public void addStateListener(final SimpleResultListener listener) {
-//        if (mAuthListener == null) {
-//            mAuthListener = new FirebaseAuth.AuthStateListener() {
-//
-//                @Override
-//                public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
-//                    if (firebaseAuth.getCurrentUser() == null) {
-//
-//                    }
-//                }
-//            };
-//            FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
-//        }
-//    }
-//
-//    @Override
-//    public void removeStateListener() {
-//        if (mAuthListener != null) {
-//            FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
-//            mAuthListener = null;
-//        }
-//    }
 
     @Override
     public void signOut(final SimpleResultListener simpleResultListener) {
@@ -135,7 +107,6 @@ public final class DataManager implements RegistrationModel, RealDataBaseModel, 
                     @Override
                     public void onComplete(@NonNull final Task<Void> task) {
                         if (task.isSuccessful()) {
-//                            task.getException().getMessage();
                             listener.onSuccess();
                         } else {
                             listener.onError();
@@ -190,11 +161,6 @@ public final class DataManager implements RegistrationModel, RealDataBaseModel, 
         }
     }
 
-//    @Override
-//    public List<UserModel> getAllUsers() {
-//        return null;
-//    }
-
     @Override
     public void updateNewSound(final FullSofindModel sofind, final SimpleResultListener listener) {
         mSoundDatabaseReference.child(sofind.getCreateTime() + "")
@@ -224,8 +190,6 @@ public final class DataManager implements RegistrationModel, RealDataBaseModel, 
 
                 @Override
                 public void onChildChanged(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
-//                    presenter.updateYouSound(dataSnapshot.getValue(SofindModel.class));
-//                    lastItems.removeEventListener(mSoundChildEventListener);
                 }
 
                 @Override
@@ -245,7 +209,6 @@ public final class DataManager implements RegistrationModel, RealDataBaseModel, 
             };
         }
         lastItems.addChildEventListener(mSoundChildEventListener);
-//        mSoundDatabaseReference.addChildEventListener(mSoundChildEventListener);
     }
 
     @Override
@@ -277,7 +240,6 @@ public final class DataManager implements RegistrationModel, RealDataBaseModel, 
                         mUserDatabaseReference.removeEventListener(this);
                         listener.resultProcess(fullName);
                     }
-//                mUserDatabaseReference.removeEventListener(this);
                 }
 
                 @Override
@@ -339,12 +301,10 @@ public final class DataManager implements RegistrationModel, RealDataBaseModel, 
 
             }
         });
-//        mSoundDatabaseReference.child(updatedSofind.getUserId()+updatedSofind.getCreateTime()).setValue(updatedSofind);
     }
 
     @Override
     public void loadMoreSofinds(final IYouSoundPresenter presenter, final int getSofinds) {
-//        mLastSofinds += 20;
         if (mUpdateChildListener == null) {
             mUpdateChildListener = new ChildEventListener() {
 
@@ -357,7 +317,7 @@ public final class DataManager implements RegistrationModel, RealDataBaseModel, 
                         lastUpdated = sofind.getCreateTime();
                     }
 //                    if (lastUpdated >= sofind.getCreateTime()) {
-                    presenter.updateAditionalItems(sofind);
+                    presenter.updateAdditionalItems(sofind);
 //                    }
 
                 }

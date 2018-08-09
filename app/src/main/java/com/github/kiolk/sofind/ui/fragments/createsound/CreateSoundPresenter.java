@@ -6,23 +6,25 @@ import com.github.kiolk.sofind.data.models.FullSofindModel;
 import com.github.kiolk.sofind.data.models.SofindModel;
 import com.github.kiolk.sofind.providers.UserInfoProvider;
 
+/**
+ * Presenter what implement interface ICreateSoundPresenter
+ */
 public class CreateSoundPresenter implements ICreateSoundPresenter {
 
-    private ICreateSoundView mView;
+    private final ICreateSoundView mView;
     private SofindModel mNewSofind;
     private String mUserName;
 
-    CreateSoundPresenter(ICreateSoundView createSoundView){
+    CreateSoundPresenter(final ICreateSoundView createSoundView) {
         mView = createSoundView;
-//        mNewSofind = new SofindModel();
     }
 
     @Override
     public void updateExampleForm() {
-        if(mUserName == null) {
+        if (mUserName == null) {
             mUserName = UserInfoProvider.getUserNameSurname(mView.getContext());
         }
-        if(mNewSofind == null){
+        if (mNewSofind == null) {
             mNewSofind = new SofindModel();
             mNewSofind.setUserId(UserInfoProvider.getUserId(mView.getContext()));
             mNewSofind.setCreateTime(System.currentTimeMillis());
@@ -32,16 +34,17 @@ public class CreateSoundPresenter implements ICreateSoundPresenter {
     }
 
     @Override
-    public void saveNewSofind(String sofindBody) {
+    public void saveNewSofind(final String sofindBody) {
         mNewSofind.setMindMessage(sofindBody);
-        FullSofindModel fullSofindModel = new FullSofindModel();
+        final FullSofindModel fullSofindModel = new FullSofindModel();
         fullSofindModel.setUserId(UserInfoProvider.getUserId(mView.getContext()));
         fullSofindModel.setMindMessage(sofindBody);
         fullSofindModel.setCreateTime(System.currentTimeMillis());
         DataManager.getInstance().updateNewSound(fullSofindModel, new SimpleResultListener() {
+
             @Override
             public void onSuccess() {
-                mView.succesSave();
+                mView.successSave();
             }
 
             @Override

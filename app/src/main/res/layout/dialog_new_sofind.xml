@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <EditText
         android:id="@+id/edit_text_dialog"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/BIG_PADDING"
-        android:hint="@string/YOUR_SOUND"
-        android:background="@drawable/background_input"
-        android:gravity="center"
         android:layout_marginLeft="@dimen/BIG_PADDING"
         android:layout_marginRight="@dimen/BIG_PADDING"
+        android:background="@drawable/background_input"
+        android:gravity="center"
+        android:hint="@string/YOUR_SOUND"
+        android:minLines="5"
+        android:paddingBottom="@dimen/BIG_PADDING"
         android:textColor="?attr/primaryTextColor"
-        android:textSize="@dimen/BIG_TEXT_SIZE"
-        android:inputType="text" />
+        android:textSize="@dimen/BIG_TEXT_SIZE"/>
 
 </LinearLayout>

@@ -2,6 +2,10 @@ package com.github.kiolk.sofind.ui.activities.registration;
 
 import com.github.kiolk.sofind.data.models.UserModel;
 
+/**
+ * Interface of view component ov Registration process
+ */
+
 public interface RegistrationView {
 
     int INVALID_PASSWORD_OR_EMAIL = 0;

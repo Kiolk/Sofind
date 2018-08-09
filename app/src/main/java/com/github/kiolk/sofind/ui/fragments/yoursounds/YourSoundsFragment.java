@@ -18,17 +18,16 @@ import com.github.kiolk.sofind.ui.fragments.base.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class YourSoundsFragment extends BaseFragment implements IYouSoundView {
 
     private String mUserId;
     private SoundRecyclerAdapter mAdapter;
     private List<FullSofindModel> mListSofinds;
     private IYouSoundPresenter mPresenter;
-      int updatePoint = 0;
+    int updatePoint;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         mListSofinds = new ArrayList<>();
@@ -38,13 +37,14 @@ public class YourSoundsFragment extends BaseFragment implements IYouSoundView {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_with_recycler_view, null);
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_with_recycler_view, null);
         changeTitle();
         changeMenu();
         setupToolBar();
         return view;
     }
+
     //TODO work with inheritance fields
     private void changeMenu() {
         super.menuId = R.id.search_menu_item;
@@ -56,7 +56,7 @@ public class YourSoundsFragment extends BaseFragment implements IYouSoundView {
 
     @Override
     public void showUserSounds() {
-        RecyclerView recycler = getView().findViewById(R.id.general_fragment_recycler_view);
+        final RecyclerView recycler = getView().findViewById(R.id.general_fragment_recycler_view);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(mAdapter);
         mPresenter.subscribeOnSounds();
@@ -69,13 +69,13 @@ public class YourSoundsFragment extends BaseFragment implements IYouSoundView {
     }
 
     @Override
-    public void setUserSound(FullSofindModel userSofind) {
-        if(mUserId != null ){
-            if(mUserId.equals(userSofind.getUserId())){
+    public void setUserSound(final FullSofindModel userSofind) {
+        if (mUserId != null) {
+            if (mUserId.equals(userSofind.getUserId())) {
                 mListSofinds.add(0, userSofind);
                 mAdapter.notifyDataSetChanged();
             }
-        }else{
+        } else {
             mListSofinds.add(0, userSofind);
             mAdapter.notifyDataSetChanged();
         }
@@ -83,27 +83,27 @@ public class YourSoundsFragment extends BaseFragment implements IYouSoundView {
     }
 
     @Override
-    public void addLateSound(FullSofindModel userSofind) {
-        if(updatePoint == 0){
+    public void addLateSound(final FullSofindModel userSofind) {
+        if (updatePoint == 0) {
             updatePoint = mListSofinds.size();
         }
-        if(mUserId != null ){
-            if(mUserId.equals(userSofind.getUserId())){
+        if (mUserId != null) {
+            if (mUserId.equals(userSofind.getUserId())) {
                 mListSofinds.add(updatePoint, userSofind);
                 mAdapter.notifyDataSetChanged();
             }
-        }else{
+        } else {
             mListSofinds.add(updatePoint, userSofind);
             mAdapter.notifyDataSetChanged();
         }
     }
 
     @Override
-    public void shouUpdateProgressBar(boolean isShow) {
-        ProgressBar progressBar = getView().findViewById(R.id.update_progress_bar);
-        if(isShow){
+    public void showUpdateProgressBar(final boolean isShow) {
+        final ProgressBar progressBar = getView().findViewById(R.id.update_progress_bar);
+        if (isShow) {
             progressBar.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             progressBar.setVisibility(View.GONE);
         }
     }

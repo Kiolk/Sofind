@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:gravity="center"
-    android:layout_margin="@dimen/STANDART_PADDING">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/STANDART_PADDING"
+                android:gravity="center">
 
     <ImageView
         android:id="@+id/day_mod_button"
         android:layout_width="@dimen/BIG_ICON_SIZE"
         android:layout_height="@dimen/BIG_ICON_SIZE"
-        android:background="?attr/backgroundColor"
         android:layout_margin="@dimen/STANDART_PADDING"
+        android:background="?attr/backgroundColor"
         android:padding="@dimen/STANDART_PADDING"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_sun"
@@ -17,14 +18,14 @@
 
     <ImageView
         android:id="@+id/night_mod_button"
+        android:layout_width="@dimen/BIG_ICON_SIZE"
+        android:layout_height="@dimen/BIG_ICON_SIZE"
         android:layout_margin="@dimen/STANDART_PADDING"
         android:layout_toRightOf="@+id/day_mod_button"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_night"
-        android:layout_width="@dimen/BIG_ICON_SIZE"
         android:background="?attr/backgroundColor"
-        android:layout_height="@dimen/BIG_ICON_SIZE"
-        android:padding="@dimen/STANDART_PADDING" />
+        android:padding="@dimen/STANDART_PADDING"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_night"/>
 
 </RelativeLayout>
 

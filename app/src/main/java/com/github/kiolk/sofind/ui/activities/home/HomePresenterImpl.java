@@ -14,26 +14,6 @@ public class HomePresenterImpl implements HomePresenter {
         mHomeView = view;
     }
 
-//    @Override
-//    public void onResupe() {
-//        DataManager.getInstance().addStateListener(new SimpleResultListener() {
-//            @Override
-//            public void onSuccess() {
-//                mHomeView.singOut();
-//            }
-//
-//            @Override
-//            public void onError(String message) {
-//
-//            }
-//        });
-//    }
-//
-//    @Override
-//    public void onPause() {
-//        DataManager.getInstance().removeStateListener();
-//    }
-
     @Override
     public void singOut() {
         DataManager.getInstance().signOut(new SimpleResultListener() {

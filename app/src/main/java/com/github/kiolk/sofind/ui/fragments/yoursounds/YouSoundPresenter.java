@@ -5,16 +5,20 @@ import com.github.kiolk.sofind.data.managers.DataManager;
 import com.github.kiolk.sofind.data.models.FullSofindModel;
 import com.github.kiolk.sofind.data.models.SofindModel;
 
+/**
+ * Implementation of IYouSoundPresenter for display only users sofinds with possibility of pagination of data
+ */
 public class YouSoundPresenter implements IYouSoundPresenter {
 
-    public static final int PORTION_UPDATE_ITEMS = 10;
-    private IYouSoundView mView;
-    private int mAadditionalUpdate = - 10;
-    private int mCount = 0;
+    private static final int PORTION_UPDATE_ITEMS = 10;
+    private final IYouSoundView mView;
+    private int mAdditionalUpdate = -10;
+    private int mCount;
 
-    public YouSoundPresenter(IYouSoundView view){
+    public YouSoundPresenter(final IYouSoundView view) {
         mView = view;
     }
+
     @Override
     public void subscribeOnSounds() {
         DataManager.getInstance().subscribeOnUsersSounds(this);
@@ -26,12 +30,13 @@ public class YouSoundPresenter implements IYouSoundPresenter {
     }
 
     @Override
-    public void updateYouSound(SofindModel sofind) {
+    public void updateYouSound(final SofindModel sofind) {
         final FullSofindModel fullSofind = new FullSofindModel(sofind);
         DataManager.getInstance().getUserFullName(sofind.getUserId(), new ObjectResultListener() {
+
             @Override
-            public void resultProcess(Object result) {
-                String fullName = (String) result;
+            public void resultProcess(final Object result) {
+                final String fullName = (String) result;
                 fullSofind.setUserFullName(fullName);
                 mView.setUserSound(fullSofind);
             }
@@ -39,32 +44,33 @@ public class YouSoundPresenter implements IYouSoundPresenter {
     }
 
     @Override
-    public void saveUpdatedSofind(SofindModel updatedSofind) {
+    public void saveUpdatedSofind(final SofindModel updatedSofind) {
         DataManager.getInstance().updateSound(updatedSofind);
     }
 
     @Override
-    public void loadMoreData(int size) {
-        if(mAadditionalUpdate + PORTION_UPDATE_ITEMS == 0){
+    public void loadMoreData(final int size) {
+        if (mAdditionalUpdate + PORTION_UPDATE_ITEMS == 0) {
             mView.resetAddPoint();
-            mView.shouUpdateProgressBar(true);
-            mAadditionalUpdate = size;
+            mView.showUpdateProgressBar(true);
+            mAdditionalUpdate = size;
             mCount = PORTION_UPDATE_ITEMS;
             DataManager.getInstance().loadMoreSofinds(this, size + PORTION_UPDATE_ITEMS);
         }
     }
 
     @Override
-    public void updateAditionalItems(FullSofindModel sofind) {
-        --mAadditionalUpdate;
+    public void updateAdditionalItems(final FullSofindModel sofind) {
+        --mAdditionalUpdate;
         --mCount;
-        if(mCount > 0){
-            mView.shouUpdateProgressBar(false);
+        if (mCount > 0) {
+            mView.showUpdateProgressBar(false);
             final FullSofindModel fullSofind = new FullSofindModel(sofind);
             DataManager.getInstance().getUserFullName(sofind.getUserId(), new ObjectResultListener() {
+
                 @Override
-                public void resultProcess(Object result) {
-                    String fullName = (String) result;
+                public void resultProcess(final Object result) {
+                    final String fullName = (String) result;
                     fullSofind.setUserFullName(fullName);
                     mView.addLateSound(fullSofind);
                 }

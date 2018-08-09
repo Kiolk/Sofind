@@ -2,6 +2,10 @@ package com.github.kiolk.sofind.ui.fragments.profile;
 
 import com.github.kiolk.sofind.data.models.UserModel;
 
+/**
+ * Interface of view component of display and edit profile information
+ */
+
 public interface IProfileView {
 
     void saveEditProfile();

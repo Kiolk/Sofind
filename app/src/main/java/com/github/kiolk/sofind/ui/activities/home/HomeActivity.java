@@ -47,7 +47,6 @@ public class HomeActivity extends BaseActivity implements HomeView {
     private final ProfileFragment mEdProfileFragment = new ProfileFragment();
     private FloatingActionButton mAddNewSofind;
     private boolean isFirstLoad = true;
-//    private final boolean isReadyToLeave = false;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -75,7 +74,6 @@ public class HomeActivity extends BaseActivity implements HomeView {
         final LayoutInflater inflater = getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_new_sofind, null);
         final EditText userInput = view.findViewById(R.id.edit_text_dialog);
-//        userInput.setli
         final AlertDialog.Builder sofindDialogBuilder = new AlertDialog.Builder(this);
         sofindDialogBuilder.setTitle(R.string.NEW_SOUND).setPositiveButton(R.string.SAVE, new DialogInterface.OnClickListener() {
 
@@ -124,11 +122,9 @@ public class HomeActivity extends BaseActivity implements HomeView {
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search_menu_item:
-                Toast.makeText(getBaseContext(), "Selected search", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.save_menu_item:
                 mCreateSoundFragment.saveNewSofind();
-                Toast.makeText(getBaseContext(), "Selected save", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.profile_menu_item:
                 mEdProfileFragment.saveEditProfile();
@@ -141,20 +137,14 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     private void setupToolBar() {
         final Toolbar toolbar = findViewById(R.id.main_tool_bar);
-//        Toolbar.LayoutParams params = (Toolbar.LayoutParams) toolbar.getLayoutParams();
-//        params.layoutS
         setSupportActionBar(toolbar);
         toolbar.setVisibility(View.VISIBLE);
         closeFragments();
-//        showFragment(mYouSoundFragment);
-//        showUserSounds();
     }
 
     private void setupNavigationView() {
         final NavigationView navigationView = findViewById(R.id.menu_navigation_view);
         reloadDrawerLayout();
-//        TextView drawerTitle = navigationView.getHeaderView(0).findViewById(R.id.user_name_header_text_view);
-//        drawerTitle.setText(UserInfoProvider.getUserNameSurname(getBaseContext()));
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             @Override
@@ -173,31 +163,23 @@ public class HomeActivity extends BaseActivity implements HomeView {
                         mAddNewSofind.setVisibility(View.VISIBLE);
                         showFragment(mWorldSoundFragment);
                         mWorldSoundFragment.showUserSounds();
-                        Toast.makeText(getBaseContext(), "Selected world sounds", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.create_new_sounds_menu_item:
                         showFragment(mCreateSoundFragment);
                         mCreateSoundFragment.prepareForm();
-                        Toast.makeText(getBaseContext(), "Selected create user sound", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.edit_profile_menu_item:
                         final AppBarLayout appBar = findViewById(R.id.general_app_bar_layout);
                         appBar.setExpanded(true);
-
-//                        final FrameLayout frame = findViewById(R.id.fragments_container);
-//                        frame.setBe
                         showFragment(mEdProfileFragment);
                         mEdProfileFragment.prepareInformation();
-                        Toast.makeText(getBaseContext(), "Selected edit profile", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.setting_menu_item:
                         showFragment(mConfigurationFragment);
                         mConfigurationFragment.setSettingItems();
-                        Toast.makeText(getBaseContext(), "Selected_settings", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.log_out_menu_item:
                         mPresenter.singOut();
-                        Toast.makeText(getBaseContext(), "Selected log out", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
@@ -207,7 +189,6 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     private void showUserSounds() {
         mAddNewSofind.setVisibility(View.VISIBLE);
-//        Toast.makeText(getBaseContext(), "Selected user sounds", Toast.LENGTH_SHORT).show();
         showFragment(mYouSoundFragment);
         mYouSoundFragment.setUserFilter();
         mYouSoundFragment.showUserSounds();
@@ -243,8 +224,6 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     @Override
     public void singOut() {
-//        Intent intent = new Intent(this, SplashActivity.class);
-//        startActivity(intent);
         finish();
     }
 
@@ -257,45 +236,17 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     @Override
     public void onBackPressed() {
-//        if(isReadyToLeave){
-////            super.onBackPressed();
-////            Intent intent = new Intent(this, SplashActivity.class);
-////            startActivity(intent);
-//            finish();
-//        }else {
         new LeaveMessage().show(getFragmentManager(), null);
-//       / }
-////        showUserSounds();
-//        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getBaseContext());
-//        alertBuilder.setTitle(R.string.ARE_YOU_WANT_LEAV).setPositiveButton(R.string.YES, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//               isReadyToLeave = true;
-//               onBackPressed();
-//            }
-//        }).setNegativeButton(R.string.NO, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                //
-//            }
-//        }).create().show();
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-//        mPresenter.onResupe();
         if (isFirstLoad) {
             showUserSounds();
             isFirstLoad = false;
         }
     }
-
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        mPresenter.onPause();
-//    }
 
     public void restart() {
         final Intent intent = new Intent(getBaseContext(), HomeActivity.class);

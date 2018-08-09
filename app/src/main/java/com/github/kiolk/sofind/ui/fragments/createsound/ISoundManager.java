@@ -6,6 +6,10 @@ import com.github.kiolk.sofind.data.models.FullSofindModel;
 import com.github.kiolk.sofind.data.models.SofindModel;
 import com.github.kiolk.sofind.ui.fragments.yoursounds.IYouSoundPresenter;
 
+/**
+ * Interface of model component for working with sofind on backend side. Contain methods for management
+ * of manipulation with sofinds.
+ */
 public interface ISoundManager {
 
     void updateNewSound(FullSofindModel sofind, SimpleResultListener listener);

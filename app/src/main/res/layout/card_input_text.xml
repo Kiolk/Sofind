@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:layout_margin="@dimen/STANDART_PADDING">
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="@dimen/STANDART_PADDING">
 
     <EditText
         android:id="@+id/new_sound_body_edit_text"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="top"
         android:background="?attr/backgroundColor"
-        android:textColor="?attr/primaryTextColor"
         android:gravity="top"
         android:padding="@dimen/STANDART_PADDING"
-        android:layout_height="match_parent"/>
+        android:textColor="?attr/primaryTextColor"
+        android:inputType="text"/>
 
 </android.support.v7.widget.CardView>

@@ -12,10 +12,6 @@ public interface RegistrationModel {
 
     void registerNewUser(String email, String password, SimpleResultListener simpleResultListener);
 
-//    void addStateListener(SimpleResultListener listener);
-//
-//    void removeStateListener();
-
     void signOut(SimpleResultListener simpleResultListener);
 
     String getUserUid();

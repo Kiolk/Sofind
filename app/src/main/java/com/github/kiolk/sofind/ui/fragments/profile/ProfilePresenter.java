@@ -5,22 +5,27 @@ import com.github.kiolk.sofind.data.listeners.SimpleResultListener;
 import com.github.kiolk.sofind.data.managers.DataManager;
 import com.github.kiolk.sofind.data.models.UserModel;
 
+/**
+ * Implementation of presenter interface
+ */
+
 public class ProfilePresenter implements IProfilePresenter {
 
-    private IProfileView mProfileView;
+    private final IProfileView mProfileView;
     private UserModel mUserInformation;
 
-    public ProfilePresenter(IProfileView profileView) {
+    ProfilePresenter(final IProfileView profileView) {
         mProfileView = profileView;
     }
 
     @Override
     public void saveUser(final UserModel user) {
-        if(user.getPassword().equals("")){
+        if ("".equals(user.getPassword())) {
             user.setPassword(mUserInformation.getPassword());
         }
         user.setUserId(mUserInformation.getUserId());
         DataManager.getInstance().saveNewUser(user, new SimpleResultListener() {
+
             @Override
             public void onSuccess() {
                 mProfileView.successUpdate();
@@ -38,9 +43,10 @@ public class ProfilePresenter implements IProfilePresenter {
     public void getUserInformation() {
         mProfileView.showProgressBar(true);
         DataManager.getInstance().getUserInformation(new ObjectResultListener() {
+
             @Override
-            public void resultProcess(Object result) {
-                if (result != null && result instanceof UserModel) {
+            public void resultProcess(final Object result) {
+                if (result instanceof UserModel) {
                     mProfileView.showProgressBar(false);
                     mUserInformation = (UserModel) result;
                     mProfileView.setInformation(mUserInformation);
@@ -51,9 +57,8 @@ public class ProfilePresenter implements IProfilePresenter {
     }
 
     @Override
-    public boolean confirmUserPassword(String password) {
+    public boolean confirmUserPassword(final String password) {
         return password.equals(mUserInformation.getPassword());
     }
-
 
 }

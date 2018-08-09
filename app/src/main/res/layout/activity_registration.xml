@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/backgroundColor"
-    tools:context="com.github.kiolk.sofind.ui.activities.registration.RegistrationActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/backgroundColor"
+                tools:context="com.github.kiolk.sofind.ui.activities.registration.RegistrationActivity">
 
 
     <EditText
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/EMAIL"
         android:inputType="textEmailAddress"
-        android:paddingTop="100dp" />
+        android:paddingTop="100dp"/>
 
 
     <EditText
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/email_edit_text"
         android:hint="@string/PASSWORD"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"/>
 
 
     <LinearLayout
@@ -40,9 +40,10 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/BIG_PADDING"
             android:paddingLeft="@dimen/BIG_PADDING"
-            android:textColor="?attr/primaryTextColor"
+            android:paddingStart="@dimen/BIG_PADDING"
             android:paddingTop="@dimen/BIG_PADDING"
-            android:text="@string/REGISTRATION_FORM" />
+            android:text="@string/REGISTRATION_FORM"
+            android:textColor="?attr/primaryTextColor"/>
 
         <EditText
             android:id="@+id/user_name_edit_text"
@@ -50,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/YOUR_NAME"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"/>
 
 
         <EditText
@@ -59,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/YOUR_SURNAME"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"/>
 
 
         <EditText
@@ -68,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/YOUR_AGE"
-            android:inputType="number" />
+            android:inputType="number"/>
 
 
         <RadioGroup
@@ -86,16 +87,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:paddingEnd="@dimen/BIG_PADDING"
                 android:paddingRight="@dimen/BIG_PADDING"
-                android:text="@string/MALE" />
+                android:text="@string/MALE"/>
 
             <RadioButton
                 android:id="@+id/female_radio_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:paddingEnd="@dimen/BIG_PADDING"
                 android:paddingRight="@dimen/BIG_PADDING"
-                android:text="@string/FEMALE" />
+                android:text="@string/FEMALE"/>
 
         </RadioGroup>
 
@@ -113,13 +116,13 @@
             android:id="@+id/log_in_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/LOG_IN" />
+            android:text="@string/LOG_IN"/>
 
         <Button
             android:id="@+id/register_new_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/REGISTER" />
+            android:text="@string/REGISTER"/>
     </LinearLayout>
 
     <ProgressBar
@@ -128,7 +131,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttons_block_linear_layout"
         android:layout_centerInParent="true"
-        android:visibility="invisible" />
+        android:visibility="invisible"/>
 
 
 </RelativeLayout>

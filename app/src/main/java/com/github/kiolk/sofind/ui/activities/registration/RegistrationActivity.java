@@ -82,12 +82,12 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
                 switch (v.getId()) {
                     case R.id.email_edit_text:
                         if (!isEmailValid(mEmail.getText().toString())) {
-                            mEmail.setError(getBaseContext().getResources().getString(R.string.NOT_CORRECT_INPUR_EMAIL));
+                            mEmail.setError(getBaseContext().getResources().getString(R.string.NOT_CORRECT_INPUT_EMAIL));
                         }
                         break;
                     case R.id.password_edit_text:
                         if (!isValidPassword(mPassword.getText().toString())) {
-                            mPassword.setError(getBaseContext().getResources().getString(R.string.SHORT_PASSWOR) + " " + ConstantUtil.MIN_NUMBER_IN_PASSWORD);
+                            mPassword.setError(getBaseContext().getResources().getString(R.string.SHORT_PASSWORD) + " " + ConstantUtil.MIN_NUMBER_IN_PASSWORD);
                         }
                         break;
                     case R.id.user_name_edit_text:
@@ -156,7 +156,7 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
     public void success() {
         final Intent intent = new Intent(this, SplashActivity.class);
         setResult(RESULT_OK, intent);
-        Toast.makeText(this, "Success login", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.SUCCESS_LOGIN, Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -168,7 +168,7 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
                 messageInfo = getBaseContext().getResources().getString(R.string.INVALID_PASSWORD_OR_EMAIL);
                 break;
             default:
-                messageInfo = getBaseContext().getResources().getString(R.string.MISTEKE);
+                messageInfo = getBaseContext().getResources().getString(R.string.MISTAKE);
         }
         Toast.makeText(this, messageInfo, Toast.LENGTH_SHORT).show();
     }

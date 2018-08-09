@@ -88,9 +88,11 @@ public class SplashActivity extends BaseActivity {
                 UserInfoProvider.saveUserId(getBaseContext(), userInformation.getUserId());
                 UserInfoProvider.saveUserName(getBaseContext(), userInformation.getUserName(),
                         userInformation.getSurname());
+                startActivity(intent);
+                finish();
             }
         });
-        startActivity(intent);
-        finish();
+//        startActivity(intent);
+//        finish();
     }
 }

@@ -9,7 +9,7 @@
     <string name="HEADER_BACKGROUND">Header background</string>
     <string name="SEARCH">Search</string>
     <string name="SAVE">Save</string>
-    <string name="SUCCES_LOGIN">Success login</string>
+    <string name="SUCCESS_LOGIN">Success login</string>
     <string name="EMAIL">Email</string>
     <string name="PASSWORD">Password</string>
     <string name="REGISTER">Register</string>
@@ -21,10 +21,10 @@
     <string name="YOUR_AGE">Your age</string>
     <string name="LOG_IN">Log in</string>
     <string name="SAVE_NEW_USER">Save new user</string>
-    <string name="NOT_CORRECT_INPUR_EMAIL">Not correct input email</string>
-    <string name="SHORT_PASSWOR">Password must be has </string>
+    <string name="NOT_CORRECT_INPUT_EMAIL">Not correct input email</string>
+    <string name="SHORT_PASSWORD">Password must be has </string>
     <string name="INVALID_PASSWORD_OR_EMAIL">Invalid password or email</string>
-    <string name="MISTEKE">Mistake</string>
+    <string name="MISTAKE">Mistake</string>
     <string name="INPUT_MIN_TWO_SYMBOL">Must be has </string>
     <string name="INPUT_CORRECT_AGE">Input correct age</string>
     <string name="MORE_SYMBOLS">Max number of caraters is</string>
@@ -37,7 +37,7 @@
     <string name="SAVE_WITH_CONFIRM">Password for save profile updates</string>
     <string name="INCORRECT_PASSWORD">Incorrect password</string>
     <string name="CONFIRM_PASSWORD_NOT_EQUALS">Confirm password not equals</string>
-    <string name="NOT_COMPLITE_FORM">Not correct complete form</string>
+    <string name="NOT_COMPLIT_FORM">Not correct complete form</string>
     <string name="ARE_YOU_WANT_LEAV">Are you whant leave aplication?</string>
     <string name="YES">Yes</string>
     <string name="NO">No</string>
@@ -49,9 +49,13 @@
     <string name="YOUR_CURRENT_PASSWORD">You current password</string>
     <string name="YOUR_SOUND">Type your sound</string>
     <string name="DESCRIPTION_MESSAGE_BODY">Your message can not less than 1 and more 100 charachters</string>
-    <string name="EXAMLE">Example of sound</string>
+    <string name="EXAMPLE">Example of sound</string>
     <string name="INPUT_MESSAGE">Input your message:</string>
     <string name="TEST_NUMBER">3</string>
+    <string name="ITEM">Item</string>
+    <string name="SUCCES_SAVE_INFORMATION">Success save information</string>
+    <string name="SUCCESS_SAVE_NEW_SOUND">Success save new sound</string>
+    <string name="NOT_SAVE_NEW_SOUND">Not save new sound</string>
 
     <string-array name="SETTING_ARRAY">
         <item>Change language</item>

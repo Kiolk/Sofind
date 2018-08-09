@@ -5,17 +5,17 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/user_sounds_menu_item"
-            android:icon="@drawable/ic_sound"
             android:checked="true"
-            android:title="@string/YOUR_SOUNDS" />
+            android:icon="@drawable/ic_sound"
+            android:title="@string/YOUR_SOUNDS"/>
         <item
             android:id="@+id/world_sounds_menu_item"
             android:icon="@drawable/ic_world_sound"
-            android:title="@string/WORLD_SOUNDS" />
+            android:title="@string/WORLD_SOUNDS"/>
         <item
             android:id="@+id/create_new_sounds_menu_item"
             android:icon="@drawable/ic_speaking"
-            android:title="@string/CREATE_SOUND" />
+            android:title="@string/CREATE_SOUND"/>
     </group>
     <group
         android:id="@+id/setting_menu_group"
@@ -23,11 +23,11 @@
         <item
             android:id="@+id/edit_profile_menu_item"
             android:icon="@drawable/ic_profile"
-            android:title="@string/EDIT_PROFILE" />
+            android:title="@string/EDIT_PROFILE"/>
         <item
             android:id="@+id/setting_menu_item"
             android:icon="@drawable/ic_settings_gears"
-            android:title="@string/SETTING" />
+            android:title="@string/SETTING"/>
     </group>
     <group
         android:id="@+id/logout_menu_group"
@@ -35,6 +35,6 @@
         <item
             android:id="@+id/log_out_menu_item"
             android:icon="@drawable/ic_log_out"
-            android:title="@string/LOG_OUT" />
+            android:title="@string/LOG_OUT"/>
     </group>
 </menu>
